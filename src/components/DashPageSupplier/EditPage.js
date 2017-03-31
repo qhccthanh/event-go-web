@@ -3,28 +3,11 @@ import {store} from '../../storeConfigure';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
-import {TextField, RaisedButton} from 'material-ui';
+import {TextField, RaisedButton, Chip} from 'material-ui';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import {setIsEditSupplier} from '../../reducer/supplier/action';
 import {FaChevronLeft, FaFloppyO}  from 'react-icons/lib/fa';
-
-const styles = {
-  errorStyle: {
-    color: orange500,
-  },
-  underlineStyle: {
-    borderColor: orange500,
-  },
-  floatingLabelStyle: {
-    color: orange500,
-  },
-  floatingLabelFocusStyle: {
-    color: blue500,
-  },
-  topButton: {
-      marginRight: 10,
-  }
-};
+import styles from '../stylesScript';
 
 const EditPage = (supplier) => ({
     render() {
@@ -52,27 +35,26 @@ const EditPage = (supplier) => ({
                 </div>
                 <div>
                      <TextField
-                    hintText="Supplier Name"
-                    hintStyle={styles.errorStyle}
-                    /><br />
-                    <TextField
-                    hintText="Custom error color"
-                    errorText="This field is required."
-                    errorStyle={styles.errorStyle}
-                    /><br />
-                    <TextField
-                    hintText="Custom Underline Color"
-                    underlineStyle={styles.underlineStyle}
-                    /><br />
-                    <TextField
-                    hintText="Custom Underline Focus Color"
-                    underlineFocusStyle={styles.underlineStyle}
-                    /><br />
-                    <TextField
-                    floatingLabelText="Styled Floating Label Text"
+                    floatingLabelText="Supplier Name"
                     floatingLabelStyle={styles.floatingLabelStyle}
                     floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                     />
+                    <TextField
+                    floatingLabelText="Fanpage Facebook"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <TextField
+                    floatingLabelText="Description"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <TextField
+                    floatingLabelText="Username"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <div ></div>
                 </div>
             </div>
         );

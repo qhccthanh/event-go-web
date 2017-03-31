@@ -1,6 +1,8 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
 import {push} from 'react-router-redux';
+import {getSupplier} from '../../reducer/supplier/action';
+import {signIn} from '../../reducer/authentication/action';
 import {MdEvent, MdLocationOn,MdAccountCircle,
     MdNotificationsActive, MdDirectionsWalk, MdAcUnit} from 'react-icons/lib/md';
 import {FaSignIn, FaPencil, FaGift} from 'react-icons/lib/fa';
@@ -12,6 +14,7 @@ const models = [
             {
                 title: "Tổng quan",
                 action: function() {
+                    store.dispatch(getSupplier());
                     store.dispatch(push('/'));
                 },
                 icon: <MdAccountCircle/>
@@ -66,7 +69,7 @@ const models = [
             {
                 title: "Đăng nhập",
                 action: function() {
-                    store.dispatch(push('/'));
+                    store.dispatch(signIn('supplier_1', 'supplier_1'));
                 },
                 icon: <FaSignIn/>
             },

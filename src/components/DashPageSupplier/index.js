@@ -19,12 +19,7 @@ const style = {
 };
 
 const Dashboard = (states,actions) => ({
-
-  constructor() {
     
-  },
-
-  
   render() {
     const contentPage = store.getState().supplier.isEditInfo ? <EditPage></EditPage> : <InfoPage></InfoPage>;
     return (

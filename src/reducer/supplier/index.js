@@ -6,7 +6,7 @@ import {
   } from './action';
 
 const initialState = {
-  supplier: [],
+  supplier: {},
   isExpandInfo: false,
   isEditInfo: false,
 };

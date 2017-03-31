@@ -5,6 +5,7 @@ import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
 import {FaPencil}  from 'react-icons/lib/fa';
+import styles from '../stylesScript';
 
 import {
 Card, CardActions, CardHeader,
@@ -23,15 +24,7 @@ const style = {
 const InfoPage = (supplier) => ({
 
     renderChip() {
-    const stylesChip = {
-      chip: {
-        margin: 4,
-      },
-      wrapper: {
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
-    };
+    const stylesChip = styles.stylesChip;
 
     const chipData = [
       {key: 0, label: 'Angular'},
@@ -78,10 +71,7 @@ const InfoPage = (supplier) => ({
 
                         <CardText expandable={true}> Level: 1 </CardText>
                         <CardText expandable={true}> Status: </CardText>
-                        <div style={{
-                            position: 'relative',
-                            display: 'flex'
-                        }}>
+                        <div style={styles.divHorizontal}>
                             {this.renderChip()}
                         </div>
                         <CardActions>
