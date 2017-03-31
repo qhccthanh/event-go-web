@@ -341,3 +341,7 @@ ul, ol {
     margin-bottom: 10px;
 }
 
+.horizontal-content {
+  position: 'relative';
+  display: 'flex'
+}

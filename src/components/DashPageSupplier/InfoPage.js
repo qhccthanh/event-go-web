@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getSupplier, setExpandInfo} from '../../reducer/supplier/action';
+import {getSupplier, setExpandInfo, setIsEditSupplier} from '../../reducer/supplier/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -63,7 +63,11 @@ const InfoPage = (supplier) => ({
                 <RaisedButton 
                     label="Chỉnh sửa"
                     primary={true}
-                    icon={<FaPencil></FaPencil>} />
+                    icon={<FaPencil></FaPencil>} 
+                    onTouchTap={() => {
+                        store.dispatch(setIsEditSupplier())
+                    }}
+                    />
                     <Card expanded={expanded} style={cardStyle}>
                         <CardHeader
                             title="Supplier Name"

@@ -6,6 +6,7 @@ import '../../styles/App.css';
 import '../../styles/styles.css';
 import {FaPencil}  from 'react-icons/lib/fa';
 import InfoPage from './InfoPage';
+import EditPage from './EditPage';
 import {Paper, TextField,Toggle} from 'material-ui';
 
 const style = {
@@ -25,11 +26,12 @@ const Dashboard = (states,actions) => ({
 
   
   render() {
+    const contentPage = store.getState().supplier.isEditInfo ? <EditPage></EditPage> : <InfoPage></InfoPage>;
     return (
       <div  className="col-xs-12">
         {states.data}
         <Paper style={style} zDepth={2} className="col-xs-12">
-            <InfoPage></InfoPage>
+            {contentPage}
         </Paper>
       </div>
     )
