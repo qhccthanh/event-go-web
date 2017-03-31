@@ -1,7 +1,8 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
 import {push} from 'react-router-redux';
-import {MdEvent, MdLocationOn,MdAccountCircle,MdNotificationsActive, MdDirectionsWalk, MdAcUnit} from 'react-icons/lib/md';
+import {MdEvent, MdLocationOn,MdAccountCircle,
+    MdNotificationsActive, MdDirectionsWalk, MdAcUnit} from 'react-icons/lib/md';
 import {FaSignIn, FaPencil, FaGift} from 'react-icons/lib/fa';
 
 const models = [

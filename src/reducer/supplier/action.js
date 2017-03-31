@@ -1,7 +1,9 @@
 import axiosev from '../../axiosev';
+import {store} from '../../storeConfigure';
 
 export const SET_SUPPLIER = 'SET_SUPPLIER';
 export const GET_SUPPLIER = 'GET_SUPPLIER';
+export const SET_EXAPANED_INFO = 'SET_EXAPANED_INFO';
 
 export function getSupplier(id) {
   return dispatch => {
@@ -26,5 +28,17 @@ export function updateInfo(info) {
     }).catch(error => {
       console.log(error);
     });
+  }
+}
+
+export function setExpandInfo() {
+  
+  const isExpandInfo = !store.getState().supplier.isExpandInfo;
+  console.log("call");
+  console.log(isExpandInfo);
+
+  return  {
+    type: SET_EXAPANED_INFO,
+    isExpandInfo
   }
 }

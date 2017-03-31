@@ -1,13 +1,12 @@
 import {
     SET_SUPPLIER,
     GET_SUPPLIER,
-    SIGN_IN_SUPPLIER,
-    GET_ACCESS_TOKEN,
-    SET_ACCESS_TOKEN
+    SET_EXAPANED_INFO
   } from './action';
 
 const initialState = {
-  supplier: []
+  supplier: [],
+  isExpandInfo: false
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +15,10 @@ export default (state = initialState, action) => {
       return Object.assign({},state, {
         supplier: action.supplier
       });
+    case SET_EXAPANED_INFO:
+      return Object.assign({},state,{
+        isExpandInfo: action.isExpandInfo
+      })
     default:
       return state;
   }
