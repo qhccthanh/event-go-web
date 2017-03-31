@@ -26,12 +26,13 @@ const Dashboard = (states,actions) => ({
   },
 
   render() {
+    var expanded = true;
     return (
       <div  className="col-xs-12">
         {states.data}
         <Paper style={style} zDepth={2} className="col-xs-12">
 
-            <Card expanded={this.state.expanded}>
+            <Card expanded={expanded}>
               <CardHeader
                 title="URL Avatar"
                 subtitle="Subtitle"

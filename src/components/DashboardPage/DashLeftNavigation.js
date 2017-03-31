@@ -2,7 +2,8 @@ import React from 'react';
 import '../../styles/dashboard.css'
 import '../../styles/styles.css'
 import Drawer from 'material-ui/Drawer';
-import {MenuItem, Divider,AppBar,IconButton, NavigationMenu} from 'material-ui';
+import {MenuItem, Divider,AppBar,IconButton} from 'material-ui';
+import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {store} from '../../storeConfigure';
 import {setShowMenu} from '../../reducer/dashboard/action';
@@ -47,17 +48,14 @@ const DashLeftNavigation = (dashboard) => ({
         return (
             <div style={{width: widthNav}} className="header-dashboard-nav">
                 <Drawer width={widthNav} openSecondary={false} open={isShowMenu}>
-                    <AppBar
-                        title="Event Go"
-                        iconElementLeft={
+                    <AppBar title="Event Go" iconElementLeft={
                             <IconButton onClick={ () => {(
                                     store.dispatch(setShowMenu())
                                 )}
                             }>
                                 <NavigationMenu />
                             </IconButton>
-                        }
-                    />
+                        } />
                     <br/>
                     {
                         itemsHTML
