@@ -4,15 +4,30 @@ import {getEvents} from '../../reducer/events/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
+import {FaPlusCircle}  from 'react-icons/lib/fa';
+import styles from '../stylesScript';
 
+import {Paper, RaisedButton} from 'material-ui';
+import ButtonRefresh from '../Utility/ButtonRefresh';
 
 const Dashboard = (states,actions) => ({
 
   render() {
     return (
-      <div>
-        {states.data}
-        events
+      <div  className="col-xs-12">
+        <Paper style={styles.pageStyle} zDepth={2} className="col-xs-12">
+            <div className="header-content">
+              <RaisedButton 
+                    label="Tạo mới"
+                    primary={true}
+                    icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
+                    onTouchTap={() => {
+                        store.dispatch()
+                    }}
+              />
+              <ButtonRefresh onTouchTap={() => {console.log("callsomething")}}/>
+            </div>
+        </Paper>
       </div>
     )
   }

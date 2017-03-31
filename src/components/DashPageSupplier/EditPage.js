@@ -11,13 +11,14 @@ import styles from '../stylesScript';
 
 const EditPage = (supplier) => ({
     render() {
+        const supplier = store.getState().supplier.supplier;
         return (
             <div>
-                <div>
+                <div className="top-button">
                     <RaisedButton 
                     label="Trở về"
                     secondary={true}
-                    icon={<FaChevronLeft></FaChevronLeft>} 
+                    icon={<FaChevronLeft size={styles.headerIconButton.size}></FaChevronLeft>} 
                     onTouchTap={() => {
                         store.dispatch(setIsEditSupplier())
                     }}
@@ -26,33 +27,49 @@ const EditPage = (supplier) => ({
                     <RaisedButton 
                     label="Lưu"
                     primary={true}
-                    icon={<FaFloppyO></FaFloppyO>} 
+                    icon={<FaFloppyO size={styles.headerIconButton.size}></FaFloppyO>} 
                     onTouchTap={() => {
                         store.dispatch(setIsEditSupplier())
                     }}
                     style={styles.topButton}
                     />
                 </div>
-                <div>
-                     <TextField
-                    floatingLabelText="Supplier Name"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    />
-                    <TextField
-                    floatingLabelText="Fanpage Facebook"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    />
-                    <TextField
-                    floatingLabelText="Description"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    />
+                <div className="content-field">
+                    <br/>
                     <TextField
                     floatingLabelText="Username"
                     floatingLabelStyle={styles.floatingLabelStyle}
                     floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    style={styles.editSupplierTextField}
+                    value={supplier.username}
+                    disabled={true}
+                    />
+                    <br/>
+                     <TextField
+                    floatingLabelText="Supplier Name"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    style={styles.editSupplierTextField}
+                    value={supplier.name}
+                    />
+                    <br/>
+                    <TextField
+                    floatingLabelText="Fanpage Facebook"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    style={styles.editSupplierTextField}
+                    value={supplier.facebook_url}
+                    />
+                    <br/>
+                    <TextField
+                    floatingLabelText="Description"
+                    floatingLabelStyle={styles.floatingLabelStyle}
+                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    style={styles.editSupplierTextField}
+                    multiLine={true}
+                    rows={3}
+                    rowsMax={10}
+                    value={supplier.description}
                     />
                     <div ></div>
                 </div>

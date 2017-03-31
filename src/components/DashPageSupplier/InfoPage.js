@@ -11,15 +11,8 @@ import {
 Card, CardActions, CardHeader,
  CardMedia, CardTitle, Chip, RaisedButton,
   CardText, FlatButton} from 'material-ui';
+import ButtonRefresh from '../Utility/ButtonRefresh';
 
-const style = {
- 
-  padding: 10,
-  marginTop: 20,
-  marginBottom: 20,
-  marginRight: 50,
-  display: 'block',
-};
 
 const InfoPage = (supplier) => ({
 
@@ -53,14 +46,18 @@ const InfoPage = (supplier) => ({
 
         return (
             <div>
-                <RaisedButton 
+                <div className="header-content">
+                    <RaisedButton 
                     label="Chỉnh sửa"
                     primary={true}
-                    icon={<FaPencil></FaPencil>} 
+                    icon={<FaPencil size={styles.headerIconButton.size}></FaPencil>} 
                     onTouchTap={() => {
                         store.dispatch(setIsEditSupplier())
                     }}
                     />
+                    <ButtonRefresh onTouchTap={() => {}}/>
+                </div>
+                <div className="content">
                     <Card expanded={expanded} style={cardStyle}>
                         <CardHeader
                             title="Supplier Name"
@@ -81,6 +78,7 @@ const InfoPage = (supplier) => ({
                             </FlatButton>
                         </CardActions>
                     </Card>
+                </div>
             </div>
         )
     }

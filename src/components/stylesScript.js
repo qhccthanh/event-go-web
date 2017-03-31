@@ -28,5 +28,18 @@ export default  {
         display: 'flex',
         flexWrap: 'wrap',
       },
+  },
+  editSupplierTextField: {
+    marginRight: 10
+  },
+  pageStyle: {
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    marginRight: 50,
+    display: 'block',
+  },
+  headerIconButton: {
+    size: 18
   }
 };
