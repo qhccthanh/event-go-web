@@ -1,0 +1,25 @@
+import {combineReducers} from 'redux';
+import supplier from './supplier';
+import authentication from './authentication';
+import awards from './awards';
+import events from './events';
+import items from './items';
+import locations from './locations';
+import notifications from './notifications';
+import tasks from './tasks';
+import dashboard from './dashboard';
+
+import { routerReducer } from 'react-router-redux'
+
+export default combineReducers({
+  supplier,
+  authentication,
+  awards,
+  events,
+  items,
+  locations,
+  notifications,
+  tasks,
+  dashboard,
+  router: routerReducer
+});

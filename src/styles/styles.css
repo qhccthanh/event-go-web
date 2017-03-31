@@ -1,0 +1,343 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
+@import url('https://fonts.googleapis.com/css?family=Roboto:100i,300,300i,400,400i,500,700');
+
+.endfooter {
+    background-color: #0c1a1e;
+    font-family: 'Roboto', sans-serif;
+}
+
+@-webkit-keyframes App-logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@keyframes App-logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+.divContent {
+  /*background: linear-gradient(180deg, #24292e, #2b3137);*/
+  filter: Alpha(opacity=50);
+  min-height: 00px;
+  align-content: center;
+  padding-top: 100px;
+}
+
+.first-page-content {
+    background: linear-gradient(140deg, #266378 45%, #52B888 70%);
+}
+
+.btn-xl {
+    margin-left: 5;
+    margin-right: 5;
+    height: 50px;
+    font-size: 22px;
+    border-radius: 3px;
+
+}
+
+.btn.outline {
+	background: none;
+	padding: 12px 22px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.btn {
+    height: 50px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary {
+    background: #0099cc;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #e8ecf2;
+}
+
+.btn-primary.outline {
+	border: 2px solid #0099cc;
+	color: #0099cc;
+}
+
+.btn-primary:active, .btn-primary.active {
+    background: #007299;
+    box-shadow: none;
+}
+
+.col-sm-3 span {
+  color: gray;
+}
+
+.divContent h1 {
+  text-align: left;
+  color: #f9f9f9;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+@media (max-width: 768px) {
+.btn-responsive {
+  padding:2px 4px;
+  font-size:80%;
+  line-height: 1;
+  border-radius:3px;
+}
+}
+
+.btn-circle {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 25px;
+}
+.center {
+  align-items: center;
+}
+.cuadro_intro_hover{
+    padding: 0px;
+		position: relative;
+		overflow: hidden;
+		height: 200px;
+	}
+	.cuadro_intro_hover:hover .caption{
+		opacity: 1;
+		transform: translateY(-150px);
+		-webkit-transform:translateY(-150px);
+		-moz-transform:translateY(-150px);
+		-ms-transform:translateY(-150px);
+		-o-transform:translateY(-150px);
+	}
+	.cuadro_intro_hover img{
+		z-index: 4;
+	}
+	.cuadro_intro_hover .caption{
+		position: absolute;
+		top:150px;
+		-webkit-transition:all 0.3s ease-in-out;
+		transition:all 0.3s ease-in-out;
+		width: 100%;
+	}
+	.cuadro_intro_hover .blur{
+		background-color: rgba(0,0,0,0.7);
+		height: 300px;
+		z-index: 5;
+		position: absolute;
+		width: 100%;
+	}
+	.cuadro_intro_hover .caption-text{
+		z-index: 10;
+		color: #fff;
+		position: absolute;
+		height: 300px;
+		text-align: center;
+		top:-20px;
+		width: 100%;
+	}
+
+.footerleft {
+  text-align: left;
+
+}
+
+.footerleft p {
+    color: #fff;
+    font-size: 12px !important;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 15px;
+}
+
+.footerleft h3 {
+  color: #c2cad6;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footerleft p i {
+    width: 20px;
+    color: #999;
+}
+
+.footerleft p span {
+    display: block;
+    color: #8f8f8f;
+}
+
+
+.footerright p {
+    font-size: 12px;
+    color: #FFF;
+    line-height: 20px;
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+.btn-responsive {
+  padding:4px 9px;
+  font-size:90%;
+  line-height: 1.2;
+}
+
+}
+.divContent .h1 {
+  color: white;
+}
+
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.footer-ul li {
+  margin-top: 3px;
+}
+.footer-ul li a{
+  color: #707275;
+  font-size: 12px !important;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer-ul {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-left: 2px;
+
+}
+
+.featurette {
+   background-color: #fcfdff;
+}
+.container-responsive {
+    padding-top: 100px;
+    padding-right: 40px;
+    padding-left: 40px;
+    justify-content: center;
+
+}
+.container-responsive h4{
+    font-family: 'Roboto', sans-serif;
+}
+
+.middle {
+  margin-top: 30px;
+}
+
+.title-body {
+  font-size: 35px;
+    font-family: 'Roboto', sans-serif;
+  color: #b3e2b8;
+  line-height: 1.25 !important;
+}
+.text-center {
+    text-align: center !important;
+}
+.session-body {
+  margin-top: 100px;
+}
+.session-body h2 {
+  color: #c7d6c8;
+    font-family: 'Roboto', sans-serif;
+}
+
+.imgdisplay {
+  background-repeat: no-repeat;
+   background-size: cover;
+   -webkit-background-size: cover;
+   -mox-background-size: cover;
+   -o-background-size: cover;
+   width: 100%;
+   height: 150px;
+}
+.session-body h5 {
+  color: #bababa;
+    font-family: 'Roboto', sans-serif;
+}
+.inner {
+  width: 40vh;
+  margin: 0 auto;
+}
+.centerspace {
+  width: 100vh;
+  margin: 0 auto;
+}
+.ownner {
+  width: 100vh;
+  margin: 0 auto;
+}
+
+.liststep {
+  padding-top: 20px;
+  padding-bottom: 100px;
+}
+
+.card h3 {
+  border-top:2px solid white; border-bottom:2px solid white; padding:10px;
+    font-family: 'Roboto', sans-serif;
+ }
+
+.taskstep {
+  background-color: #f9f9f9;
+}
+.card p {
+  text-align:center; margin-top:20px;
+}
+
+.infoapp span {
+    font-size: 65px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700 !important;
+    color: #f9fcfa;
+}
+.infoapp h5, p {
+    text-align: left;
+    color: #f9fcfa;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-weight: 100 !important;
+}
+
+.content-header-info {
+    margin-top: 0px;
+}
+
+.wrong-pass{
+  color: red;
+}
+
+.col-centered {
+    text-align:center;
+}
+
+.login-from{
+    margin-bottom: 80px;
+    margin-top: -30px;
+    padding-bottom: 20px;
+}
+
+.app-name-title-header {
+    color: #ffffff;
+    font-size: 32px;
+    font-family: 'Roboto-Medium', sans-serif;
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
