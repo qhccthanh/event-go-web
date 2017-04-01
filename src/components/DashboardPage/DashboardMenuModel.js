@@ -6,6 +6,7 @@ import {signIn} from '../../reducer/authentication/action';
 import {MdEvent, MdLocationOn,MdAccountCircle,
     MdNotificationsActive, MdDirectionsWalk, MdAcUnit} from 'react-icons/lib/md';
 import {FaSignIn, FaPencil, FaGift} from 'react-icons/lib/fa';
+import styles from '../stylesScript';
 
 const models = [
     {
@@ -17,49 +18,49 @@ const models = [
                     store.dispatch(getSupplier());
                     store.dispatch(push('/'));
                 },
-                icon: <MdAccountCircle/>
+                icon: <MdAccountCircle size={styles.leftIconButton.size}/>
             },
             {
                 title: "Sự kiện",
                 action: function() {
                     store.dispatch(push('/events'));
                 },
-                icon: <MdEvent/>
+                icon: <MdEvent  size={styles.leftIconButton.size}/>
             },
             {
                 title: "Nhiệm vụ",
                 action: function() {
                     store.dispatch(push('/tasks'));
                 },
-                icon: <MdDirectionsWalk/>
+                icon: <MdDirectionsWalk  size={styles.leftIconButton.size}/>
             },
             {
                 title: "Vật phẩm",
                 action: function() {
                     store.dispatch(push('/items'));
                 },
-                icon: <MdAcUnit/>
+                icon: <MdAcUnit  size={styles.leftIconButton.size}/>
             },
             {
                 title: "Địa điểm",
                 action: function() {
                     store.dispatch(push('/locations'));
                 },
-                icon: <MdLocationOn/>
+                icon: <MdLocationOn  size={styles.leftIconButton.size}/>
             },
             {
                 title: "Phần thưởng",
                 action: function() {
                     store.dispatch(push('/awards'));
                 },
-                icon: <FaGift/>
+                icon: <FaGift  size={styles.leftIconButton.size}/>
             },
             {
                 title: "Thông báo",
                 action: function() {
                     store.dispatch(push('/notifications'));
                 },
-                icon: <MdNotificationsActive/>
+                icon: <MdNotificationsActive  size={styles.leftIconButton.size}/>
             },
         ],
     },
@@ -71,14 +72,14 @@ const models = [
                 action: function() {
                     store.dispatch(signIn('supplier_1', 'supplier_1'));
                 },
-                icon: <FaSignIn/>
+                icon: <FaSignIn  size={styles.leftIconButton.size}/>
             },
             {
                 title: "Cập nhật",
                 action: function() {
                     store.dispatch(push('/'));
                 },
-                icon: <FaPencil/>
+                icon: <FaPencil  size={styles.leftIconButton.size}/>
             },
         ]
     }

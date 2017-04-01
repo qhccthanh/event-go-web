@@ -41,5 +41,8 @@ export default  {
   },
   headerIconButton: {
     size: 18
+  },
+  leftIconButton: {
+    size: 18
   }
 };
