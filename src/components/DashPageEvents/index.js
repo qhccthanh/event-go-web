@@ -9,6 +9,8 @@ import styles from '../stylesScript';
 
 import {Paper, RaisedButton} from 'material-ui';
 import ButtonRefresh from '../Utility/ButtonRefresh';
+import EVTable from '../Utility/GridList';
+import CardEvent from '../Utility/CardEvent';
 
 const Dashboard = (states,actions) => ({
 
@@ -26,6 +28,10 @@ const Dashboard = (states,actions) => ({
                     }}
               />
               <ButtonRefresh onTouchTap={() => {console.log("callsomething")}}/>
+            </div>
+            <div className="content"> 
+              <EVTable></EVTable>
+              <CardEvent></CardEvent>
             </div>
         </Paper>
       </div>
