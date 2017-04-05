@@ -1,6 +1,5 @@
 import {
     SET_SUPPLIER,
-    GET_SUPPLIER,
     SET_EXAPANED_INFO,
     SET_IS_EDIT_SUPPLIER
   } from './action';

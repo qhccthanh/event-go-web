@@ -345,3 +345,33 @@ ul, ol {
   position: 'relative';
   display: 'flex'
 }
+
+.content-events {
+  margin-top: 20px;
+}
+.card-event-item {
+  margin-bottom: 20px;
+}
+
+.event-card-header {
+  
+}
+.event-card-content {
+  margin: 8px; 
+}
+
+.event-card-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 8px;
+  margin-right: 8px; 
+}
+
+.event-card-footer-button {
+  margin-right: 8px; 
+}
+
+.div-default-topbottom {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

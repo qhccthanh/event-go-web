@@ -1,6 +1,5 @@
 import {
     SET_TASK,
-    GET_TASK
   } from './action';
 
 const initialState = {

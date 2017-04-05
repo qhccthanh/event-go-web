@@ -15,6 +15,7 @@ const Dashboard = () => ({
             leftClassName: "col-sm-0",
             mainClassName: "col-sm-12"
         }
+        const snackBar = store.getState().dashboard.snackBar;
         return (
             <div>
                 <DashboardHeader/>
@@ -25,7 +26,8 @@ const Dashboard = () => ({
                     <div className={classDiv.mainClassName}>
                     </div>
                 </div>
-            </div>
+                {snackBar}
+            </div>  
         )
     }
 });

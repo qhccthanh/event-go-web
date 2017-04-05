@@ -44,7 +44,7 @@ const DashLeftNavigation = (dashboard) => ({
 
     render() {
         const isShowMenu = store.getState().dashboard.isShowMenu;
-        let widthNav = isShowMenu == true ? 250 : 0;
+        let widthNav = isShowMenu === true ? 250 : 0;
         return (
             <div style={{width: widthNav}} className="header-dashboard-nav">
                 <Drawer width={widthNav} openSecondary={false} open={isShowMenu}>

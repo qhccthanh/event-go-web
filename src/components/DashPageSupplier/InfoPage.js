@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getSupplier, setExpandInfo, setIsEditSupplier} from '../../reducer/supplier/action';
+import {setExpandInfo, setIsEditSupplier} from '../../reducer/supplier/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -8,8 +8,7 @@ import {FaPencil}  from 'react-icons/lib/fa';
 import styles from '../stylesScript';
 
 import {
-Card, CardActions, CardHeader,
- CardMedia, CardTitle, Chip, RaisedButton,
+Card, CardActions, CardHeader, Chip, RaisedButton,
   CardText, FlatButton} from 'material-ui';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 
@@ -88,12 +87,12 @@ const mapStateToProps = ({supplier}) => ({
     supplier
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    getData() {
-        return () => {
-            dispatch(getSupplier());
-        };
-    },
-});
+// const mapDispatchToProps = (dispatch) => ({
+//     getData() {
+//         return () => {
+//             dispatch(getSupplier());
+//         };
+//     },
+// });
 
 export default connect(mapStateToProps)(InfoPage);

@@ -10,6 +10,7 @@ import tasks from './tasks';
 import dashboard from './dashboard';
 
 import { routerReducer } from 'react-router-redux'
+import { reducer as formReducer } from 'redux-form'
 
 export default combineReducers({
   supplier,
@@ -21,5 +22,6 @@ export default combineReducers({
   notifications,
   tasks,
   dashboard,
-  router: routerReducer
+  router: routerReducer,
+  form: formReducer
 });

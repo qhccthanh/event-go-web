@@ -18,7 +18,7 @@ export function signIn(username, password) {
 
             var data = response.data;
 
-            if (data.code == 200) {
+            if (data.code === 200) {
                 data = data.data;
 
                 var access_token = data.access_token;

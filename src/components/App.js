@@ -9,10 +9,11 @@ import {history} from '../storeConfigure';
 
 import Supplier from './DashPageSupplier';
 import Events from './DashPageEvents';
-import Awards from './DashPageAwards';
-import Tasks from './DashPageTasks';
+// import Awards from './DashPageAwards';
+// import Tasks from './DashPageTasks';
 import Notifications from './DashPageNotifications';
 import Items from './DashPageItems';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Locations from './DashPageLocations';
 import muiTheme from '../styles/theme-material';
@@ -29,26 +30,21 @@ const routes = [
         sidebar: () => <Events/>,
         main: () => <h2>Bubblegum</h2>
     },
-    {
-        path: '/tasks',
-        sidebar: () => <Tasks/>,
-        main: () => <h2>Shoelaces</h2>
-    },
+    // {
+    //     path: '/tasks',
+    //     sidebar: () => <Tasks/>,
+    //     main: () => <h2>Shoelaces</h2>
+    // },
     {
         path: '/notifications',
         sidebar: () => <Notifications/>,
         main: () => <h2>Shoelaces</h2>
     },
-    {
-        path: '/tasks',
-        sidebar: () => <Tasks/>,
-        main: () => <h2>Shoelaces</h2>
-    },
-    {
-        path: '/awards',
-        sidebar: () => <Awards/>,
-        main: () => <h2>Shoelaces</h2>
-    },
+    // {
+    //     path: '/awards',
+    //     sidebar: () => <Awards/>,
+    //     main: () => <h2>Shoelaces</h2>
+    // },
     {
         path: '/locations',
         sidebar: () => <Locations/>,
@@ -91,7 +87,6 @@ const App = () => ({
                             </ConnectedRouter>
                         </div>
                     </div>
-
                 </div>
             </MuiThemeProvider>
         );

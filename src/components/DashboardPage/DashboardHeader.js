@@ -6,7 +6,7 @@ import '../../styles/dashboard.css';
 import '../../styles/styles.css';
 import {AppBar, IconButton} from 'material-ui';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
-import EventGoIcon from '../../images/EventGo-Logo-48.png';
+// import EventGoIcon from '../../images/EventGo-Logo-48.png';
 import {store} from '../../storeConfigure';
 import {setShowMenu} from '../../reducer/dashboard/action';
 // import EventGoIconSVG from '../../logo.svg';

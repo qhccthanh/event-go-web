@@ -1,10 +1,13 @@
 import {
     SET_ITEMS,
-    GET_ITEMS,
+    SET_IS_CREATE_ITEM,
+    SET_SHOW_DETAIL_ITEM
   } from './action';
 
 const initialState = {
-  data: []
+  data: [],
+  isCreated: false,
+  item: null
 };
 
 export default (state = initialState, action) => {
@@ -13,6 +16,16 @@ export default (state = initialState, action) => {
       return Object.assign({},state, {
         data: action.items
       });
+    case SET_IS_CREATE_ITEM:
+      return {
+        ...state,
+        isCreated: action.isCreated
+      }
+    case SET_SHOW_DETAIL_ITEM: 
+      return {
+        ...state,
+        item: action.item
+      }
     default:
       return state;
   }

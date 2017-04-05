@@ -4,8 +4,8 @@ import {push} from 'react-router-redux';
 import {getSupplier} from '../../reducer/supplier/action';
 import {signIn} from '../../reducer/authentication/action';
 import {MdEvent, MdLocationOn,MdAccountCircle,
-    MdNotificationsActive, MdDirectionsWalk, MdAcUnit} from 'react-icons/lib/md';
-import {FaSignIn, FaPencil, FaGift} from 'react-icons/lib/fa';
+    MdNotificationsActive, MdAcUnit} from 'react-icons/lib/md';
+import {FaSignIn, FaPencil} from 'react-icons/lib/fa';
 import styles from '../stylesScript';
 
 const models = [
@@ -27,13 +27,13 @@ const models = [
                 },
                 icon: <MdEvent  size={styles.leftIconButton.size}/>
             },
-            {
-                title: "Nhiệm vụ",
-                action: function() {
-                    store.dispatch(push('/tasks'));
-                },
-                icon: <MdDirectionsWalk  size={styles.leftIconButton.size}/>
-            },
+            // {
+            //     title: "Nhiệm vụ",
+            //     action: function() {
+            //         store.dispatch(push('/tasks'));
+            //     },
+            //     icon: <MdDirectionsWalk  size={styles.leftIconButton.size}/>
+            // },
             {
                 title: "Vật phẩm",
                 action: function() {
@@ -48,13 +48,13 @@ const models = [
                 },
                 icon: <MdLocationOn  size={styles.leftIconButton.size}/>
             },
-            {
-                title: "Phần thưởng",
-                action: function() {
-                    store.dispatch(push('/awards'));
-                },
-                icon: <FaGift  size={styles.leftIconButton.size}/>
-            },
+            // {
+            //     title: "Phần thưởng",
+            //     action: function() {
+            //         store.dispatch(push('/awards'));
+            //     },
+            //     icon: <FaGift  size={styles.leftIconButton.size}/>
+            // },
             {
                 title: "Thông báo",
                 action: function() {

@@ -1,6 +1,5 @@
 import {
     SET_AWARD,
-    GET_AWARD
   } from './action';
 
 const initialState = {

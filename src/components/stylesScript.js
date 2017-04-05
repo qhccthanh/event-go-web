@@ -1,6 +1,12 @@
-import {orange500, teal500, teal300 } from 'material-ui/styles/colors';
+import {orange500, teal500, teal300, blue500,red500 } from 'material-ui/styles/colors';
 
 export default  {
+  
+  baseColor: teal500,
+  warningColor: orange500,
+  errorColor: red500,
+  baseSubColor: blue500,
+
   errorStyle: {
     color: orange500,
   },
@@ -23,6 +29,7 @@ export default  {
   stylesChip: {
       chip: {
         margin: 4,
+        textColor: 'white'
       },
       wrapper: {
         display: 'flex',
@@ -38,6 +45,7 @@ export default  {
     marginBottom: 20,
     marginRight: 50,
     display: 'block',
+    zDepth: 2,
   },
   headerIconButton: {
     size: 18

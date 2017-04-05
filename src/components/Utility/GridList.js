@@ -1,39 +1,54 @@
 import React from 'react';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
+import {FaCalendarTimesO} from 'react-icons/lib/fa'; 
 
-const EVTable = () => (
-  <Table selectable={false}>
-    <TableHeader>
-      <TableRow>
-        <TableHeaderColumn>ID</TableHeaderColumn>
-        <TableHeaderColumn>Name</TableHeaderColumn>
-        <TableHeaderColumn>Status</TableHeaderColumn>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      <TableRow>
-        <TableRowColumn>1</TableRowColumn>
-        <TableRowColumn>John Smith</TableRowColumn>
-        <TableRowColumn>Employed</TableRowColumn>
-      </TableRow>
-      <TableRow>
-        <TableRowColumn>2</TableRowColumn>
-        <TableRowColumn>Randal White</TableRowColumn>
-        <TableRowColumn>Unemployed</TableRowColumn>
-      </TableRow>
-      <TableRow>
-        <TableRowColumn>3</TableRowColumn>
-        <TableRowColumn>Stephanie Sanders</TableRowColumn>
-        <TableRowColumn>Employed</TableRowColumn>
-      </TableRow>
-      <TableRow>
-        <TableRowColumn>4</TableRowColumn>
-        <TableRowColumn>Steve Brown</TableRowColumn>
-        <TableRowColumn>Employed</TableRowColumn>
-      </TableRow>
-    </TableBody>
-  </Table>
-);
+const dataFake = [
+    {
+        title: "title",
+        subTitle: "subTitle",
+        icon: <FaCalendarTimesO></FaCalendarTimesO>,
+        startTime: "14/03/1995",
+        endTime: "14/03/1995",
+    },
+]
+
+for (var index = 0; index < 12; index++) {
+    dataFake.push(dataFake[0]);
+}
+
+const EVTable = ({children}) => ({
+    render() {
+        
+        var items = this.props;
+        const allKeys = Object.keys(items);
+        console.log(items);
+        var elements = [];
+        allKeys.forEach(function(key) {
+            elements.push(items[key]);
+        }, this);
+        console.log(elements);
+        return (
+            <div className="col-xs-12">
+                {/*{dataFake.map(function(data) {
+                    return <div className="col-xs-12 col-md-6 col-lg-4 card-event-item" 
+                            children={children}
+                    >
+                        
+                    </div>
+                })}*/}
+                { 
+                    elements.map((element) => {
+                        return (
+                            <div className="col-xs-12 col-md-6 col-lg-4 card-event-item">
+                                {element}
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        );
+    }
+  
+});
 
 export default EVTable;

@@ -1,13 +1,13 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getSupplier, setExpandInfo} from '../../reducer/supplier/action';
+import {getSupplier} from '../../reducer/supplier/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
-import {FaPencil}  from 'react-icons/lib/fa';
+// import {FaPencil}  from 'react-icons/lib/fa';
 import InfoPage from './InfoPage';
 import EditPage from './EditPage';
-import {Paper, TextField,Toggle} from 'material-ui';
+import {Paper} from 'material-ui';
 import styles from '../stylesScript';
 
 const Dashboard = (states,actions) => ({
