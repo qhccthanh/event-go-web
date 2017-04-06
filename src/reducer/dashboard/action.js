@@ -14,15 +14,13 @@ export function setShowMenu() {
     }
 }
 
-export function setSnackBar(snackBar, timout) {
-    if (timout != null) {
-        setTimeout(function() {
-            store.dispatch(setSnackBar(null));
-        }, timout);
-    }
+export function setSnackBarMessage(message, autoHideDuration) {
     
     return {
         type: SET_SHOW_SNACK_BAR,
-        snackBar
+        snackBar: {
+            message,
+            autoHideDuration
+        }
     }
 }

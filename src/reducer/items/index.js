@@ -1,13 +1,18 @@
 import {
     SET_ITEMS,
     SET_IS_CREATE_ITEM,
-    SET_SHOW_DETAIL_ITEM
+    SET_SHOW_DETAIL_ITEM,
+    ADD_DATA_ITEM,
+    DELETE_DATA_ITEM,
+    SET_IS_EDIT,
+    SET_UPDATE_ITEM
   } from './action';
 
 const initialState = {
   data: [],
   isCreated: false,
-  item: null
+  item: null,
+  isEdit: false
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +30,30 @@ export default (state = initialState, action) => {
       return {
         ...state,
         item: action.item
+      }
+    case ADD_DATA_ITEM: 
+        return {
+          ...state,
+          data: state.data.push(action.item)
+        }
+    case DELETE_DATA_ITEM:
+        return {
+          ...state,
+          data: state.data.filter((item) => {
+            return item._id !== action.item.item_id;
+          })
+        }
+    case SET_IS_EDIT: 
+      return {
+        ...state,
+        isEdit: action.isEdit
+      }
+    case SET_UPDATE_ITEM:
+      return {
+        ...state,
+        data: state.data.map((item) => {
+          return item._id !== action.item.item_id ? item : action.item;
+        })
       }
     default:
       return state;

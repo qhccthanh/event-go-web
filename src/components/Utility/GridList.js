@@ -21,12 +21,11 @@ const EVTable = ({children}) => ({
         
         var items = this.props;
         const allKeys = Object.keys(items);
-        console.log(items);
         var elements = [];
         allKeys.forEach(function(key) {
             elements.push(items[key]);
         }, this);
-        console.log(elements);
+        
         return (
             <div className="col-xs-12">
                 {/*{dataFake.map(function(data) {

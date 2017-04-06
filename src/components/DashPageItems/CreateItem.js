@@ -1,12 +1,13 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
 import {setIsCreated, createItem} from '../../reducer/items/action';
+import {setSnackBarMessage} from '../../reducer/dashboard/action';
 import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
 import { RaisedButton, MenuItem, CardHeader } from 'material-ui';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, change } from 'redux-form'
 import {renderTextField, renderSelectField} from '../Utility/ReduxField';
 
 import {FaChevronLeft}  from 'react-icons/lib/fa';
@@ -26,6 +27,11 @@ const CreateItem = (props) => ({
     
     render() {
         // const { handleSubmit } = props;
+        var itemCreate = store.getState().form.CreateItemForm;
+        const preConditionValidation = itemCreate === undefined || itemCreate.values === undefined;
+
+        const showErrorName = preConditionValidation || itemCreate.values.name === undefined || itemCreate.values.name.length === 0;
+
         return (
             <div>
                 <div className="create-event-header" style={Object.assign(marginDiv,styles.floatingLabelStyle)}>
@@ -49,6 +55,7 @@ const CreateItem = (props) => ({
                         fullWidth={true}
                         component={renderTextField}
                         label="Tên vật phẩm"
+                        errorText={showErrorName ? "Vui lòng nhập liệu ô này không thể bỏ trống":null}
                         name="name"
                     />
                     <Field
@@ -88,28 +95,70 @@ const CreateItem = (props) => ({
 
                 <div className="create-event-footer" style={marginDiv}>
                     <RaisedButton label="Tạo" primary={true} onTouchTap={
-                            () => store.dispatch(
-                                createItem(
-                                    mapFormValuesToItem(store.getState().form.CreateItemForm.values)
-                                    )
-                                )
+                            () =>  {
+                                const form = store.getState().form.CreateItemForm;
+                                const validationMess = validateCanCreateItem(form);
+
+                                if (validateCanCreateItem === null) {
+                                    store.dispatch(createItem(
+                                        mapFormValuesToItem(form.values)
+                                    ));
+                                    return ;
+                                }
+                                store.dispatch(setSnackBarMessage(validationMess,2000));
+                            }
                         }/>
-                    <RaisedButton label="Làm mới" secondary={false} style={{marginLeft: 10}}/>
+                    <RaisedButton 
+                        label="Làm mới"
+                        secondary={false} 
+                        style={{marginLeft: 10}}
+                        onTouchTap={
+                            () =>  {
+                                store.dispatch(change('CreateItemForm','name',''));
+                                store.dispatch(change('CreateItemForm','detail',''));
+                                store.dispatch(change('CreateItemForm','image_url',''));
+                                store.dispatch(change('CreateItemForm','tags',''));
+                                store.dispatch(change('CreateItemForm','status',''));
+                        }}
+                    />
                  </div>
             </div>
         )
     }
 })
 
+function validateCanCreateItem(form) {
+    
+    if (form.values === undefined) {
+        return "Dữ liệu không thể rỗng";
+    }
+
+    const values = form.values;
+
+    if (!values) {
+        return "Dữ liệu không thể rỗng";
+    }
+
+    if (values.name === undefined) {
+        return "Tên vật phẫm không thễ rỗng";
+    }
+
+    if (values.detail === undefined) {
+        return "Chi tiết vật phẫm không thễ rỗng";
+    }
+
+    return null;
+}
+
 function mapFormValuesToItem(values) {
     return {
         name: values.name,
         detail: values.detail,
-        image_url: values.image_url,
-        tags: values.tags.split(",").map(value => {
+        image_url: values.image_url === undefined ? "" : values.image_url,
+        tags: values.tags === undefined ? "" : values.tags.split(",").map(value => {
             return value.trim()
         }),
-        status: values.status
+        status: values.status === undefined ? "" : values.status
     }
 }
 

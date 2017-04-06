@@ -18,6 +18,10 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Locations from './DashPageLocations';
 import muiTheme from '../styles/theme-material';
 
+import {Snackbar} from 'material-ui';
+import {connect} from 'react-redux';
+import {store} from '../storeConfigure';
+
 const routes = [
     {
         path: '/',
@@ -68,7 +72,14 @@ const App = () => ({
                     component={route.sidebar}
                 />
         ));
-
+        var snackBar = store.getState().dashboard.snackBar;
+        if (snackBar !== null) {
+            snackBar = <Snackbar
+                    open={true}
+                    message={snackBar.message}
+                    autoHideDuration={snackBar.autoHideDuration}
+                    />;
+        }
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
                 <div>
@@ -83,6 +94,7 @@ const App = () => ({
                             <ConnectedRouter history={history}>
                                 <div>
                                     {routeApp}
+                                    {snackBar}
                                 </div>
                             </ConnectedRouter>
                         </div>
@@ -92,5 +104,7 @@ const App = () => ({
         );
     }
 });
-
-export default App;
+const mapStateToProps = ({dashboard}) => ({
+    dashboard
+});
+export default connect(mapStateToProps)(App);

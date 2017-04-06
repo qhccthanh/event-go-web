@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getItems, setIsCreated} from '../../reducer/items/action';
+import {getItems, setIsCreated, setShowItem} from '../../reducer/items/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -8,8 +8,9 @@ import styles from '../stylesScript';
 
 import CreateItem from './CreateItem';
 import ItemCard from './ItemCard';
+import ItemInfo from './ItemInfo';
 
-import {Paper, RaisedButton, Divider} from 'material-ui';
+import {Paper, RaisedButton, Divider, Avatar} from 'material-ui';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 import EVTable from '../Utility/GridList';
 
@@ -21,12 +22,17 @@ const Dashboard = (states,actions) => ({
         let itemsStore = store.getState().items;
         const items = itemsStore.data;
         const itemCards =  items.map(item => {
-                                return (<ItemCard 
-                                itemTitle={item.name} 
-                                itemSubtitle={item.detail}
-                                itemAvatar={<FaPlusCircle size={40}></FaPlusCircle>}></ItemCard>)
+                                return (
+                                <ItemCard 
+                                    itemTitle={item.name} 
+                                    itemSubtitle={item.detail}
+                                    itemAvatar={<Avatar src={item.image_url}></Avatar>}
+                                    onTouchTap={() => {
+                                        store.dispatch(setShowItem(item));
+                                    }}
+                                    />);
                             });
-        console.log(itemCards);
+        
         if (itemsStore.isCreated === false && itemsStore.item === null) {
             return (
             <div key="content-events">
@@ -64,7 +70,7 @@ const Dashboard = (states,actions) => ({
 
         // Show detail event
         if (itemsStore.item) {
-        return <ItemCard/>
+        return <ItemInfo/>
         }
     },
 
