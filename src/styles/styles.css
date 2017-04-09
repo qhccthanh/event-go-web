@@ -375,3 +375,12 @@ ul, ol {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+
+.event-task-header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.right-content {
+  float: right;
+}

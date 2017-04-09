@@ -31,7 +31,7 @@ const Dashboard = (states,actions) => ({
                     primary={true}
                     icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
                     onTouchTap={() => {
-                        store.dispatch(setIsCreated())
+                        store.dispatch(setIsCreated(true))
                     }}
               />
               <ButtonRefresh onTouchTap={() => {console.log("callsomething")}}/>

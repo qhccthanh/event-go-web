@@ -68,7 +68,7 @@ export function createItem(item) {
       dispatch(addData(dataR.data));
     }).catch(error => {
       
-      dispatch(setIsCreated(false));
+      console.log(error);
       dispatch(setSnackBarMessage("Tạo vật phẩm thất bại vui lòng kiểm tra lại" , 3000));
     });
   }

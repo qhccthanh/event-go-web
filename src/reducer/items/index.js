@@ -32,15 +32,16 @@ export default (state = initialState, action) => {
         item: action.item
       }
     case ADD_DATA_ITEM: 
+        state.data.push(action.item)
         return {
           ...state,
-          data: state.data.push(action.item)
+          data: state.data
         }
     case DELETE_DATA_ITEM:
         return {
           ...state,
           data: state.data.filter((item) => {
-            return item._id !== action.item.item_id;
+            return item._id !== action.item._id;
           })
         }
     case SET_IS_EDIT: 
@@ -52,7 +53,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         data: state.data.map((item) => {
-          return item._id !== action.item.item_id ? item : action.item;
+          return item._id !== action.item._id ? item : action.item;
         })
       }
     default:

@@ -99,7 +99,7 @@ const CreateItem = (props) => ({
                                 const form = store.getState().form.CreateItemForm;
                                 const validationMess = validateCanCreateItem(form);
 
-                                if (validateCanCreateItem === null) {
+                                if (validationMess === null) {
                                     store.dispatch(createItem(
                                         mapFormValuesToItem(form.values)
                                     ));
@@ -155,7 +155,7 @@ function mapFormValuesToItem(values) {
         name: values.name,
         detail: values.detail,
         image_url: values.image_url === undefined ? "" : values.image_url,
-        tags: values.tags === undefined ? "" : values.tags.split(",").map(value => {
+        tags: values.tags === undefined ? [] : values.tags.split(",").map(value => {
             return value.trim()
         }),
         status: values.status === undefined ? "" : values.status

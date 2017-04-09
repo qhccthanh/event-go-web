@@ -2,6 +2,7 @@ import {
     SET_EVENTS,
     SET_IS_CREATED,
     SET_SHOW_DETAIL_EVENT,
+    SET_ADD_NEW_EVENT
   } from './action';
 
 const initialState = {
@@ -24,6 +25,9 @@ export default (state = initialState, action) => {
       return Object.assign({},state,{
         showEvent: action.showEvent
       });
+    case SET_ADD_NEW_EVENT:
+      state.data.push(action.event)
+      return state;
     default:
       return state;
   }

@@ -15,7 +15,12 @@ export function setShowMenu() {
 }
 
 export function setSnackBarMessage(message, autoHideDuration) {
-    
+    if (autoHideDuration !== undefined) {
+        setTimeout(() => {
+            store.dispatch(setSnackBarMessage(null));
+        }, autoHideDuration);
+    }
+
     return {
         type: SET_SHOW_SNACK_BAR,
         snackBar: {

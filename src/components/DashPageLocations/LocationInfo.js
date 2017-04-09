@@ -1,17 +1,16 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {setIsCreated, createLocation, getSearchAddress} from '../../reducer/locations/action';
-import {setSnackBarMessage} from '../../reducer/dashboard/action';
+import {setIsCreated, createLocation, getSearchAddress, setHiddenLocation, setIsEdit, updateLocation, deleteLocation} from '../../reducer/locations/action';
 import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
-import { RaisedButton, MenuItem } from 'material-ui';
-import { Field, reduxForm, formValueSelector} from 'redux-form'
+import { RaisedButton, MenuItem, CardHeader, Snackbar } from 'material-ui';
+import { Field, reduxForm, formValueSelector, change } from 'redux-form'
 import {renderTextField, renderSelectField} from '../Utility/ReduxField';
-import {connect} from 'react-redux';
 
-import { FaChevronLeft, FaSearch}  from 'react-icons/lib/fa';
+import {FaChevronLeft, FaPencil, FaBan, FaFloppyO, FaTrash, FaSearch}  from 'react-icons/lib/fa';
+import {connect} from 'react-redux';
 
 import EVMap from '../Utility/EVMap';
 
@@ -27,12 +26,15 @@ const tags = [
   <MenuItem key={3} value="closing" primaryText="Đóng cửa" />,
 ];
 
-const CreateLocation = (props) => ({
+const LocationItem = (props) => ({
     
     render() {
-        // const { handleSubmit} = props;
+        const location = store.getState().locations.location;
+        const isEdit = store.getState().locations.isEdit;
+        const needRemoveWarnState = (store.getState().form.InfoLocationForm === undefined || store.getState().form.InfoLocationForm.values === undefined);
+
         const errorSearch = store.getState().locations.errorSearch;
-        const searchData = store.getState().locations.dataSearch;
+        const searchData = location.location_info;
         const markers =  searchData === null ? [] : [
             {
                 position: searchData.coordinate,
@@ -40,17 +42,86 @@ const CreateLocation = (props) => ({
                 defaultAnimation: 2,
             }
         ]
+
+        if (!isEdit){
+            store.dispatch(change('InfoLocationForm','name',location.name));
+            store.dispatch(change('InfoLocationForm','detail',location.detail));
+            store.dispatch(change('InfoLocationForm','address',location.address));
+            store.dispatch(change('InfoLocationForm','image_url',location.image_url));
+            store.dispatch(change('InfoLocationForm','tags',location.tags.join()));
+            if (location.links !== undefined || typeof(location.links) === 'Array') {
+                store.dispatch(change('InfoLocationForm','links',location.links.join()));
+            } else {
+                store.dispatch(change('InfoLocationForm','links',""));
+            }
+            
+            store.dispatch(change('InfoLocationForm','status',location.status));
+        } else if (needRemoveWarnState) {
+            store.dispatch(setHiddenLocation());
+            store.dispatch(setIsEdit(false));
+            return <div></div>
+        }
+
+        const locationUpdate = store.getState().form.InfoLocationForm.values;
+        const isEnableSaveButton = !(locationUpdate.name !== location.name || locationUpdate.detail !== location.detail || locationUpdate.image_url !== location.image_url || locationUpdate.status !== location.status || locationUpdate.tags !== location.tags.join())
+
         return (
             <div>
                 <div className="create-event-header" style={Object.assign(marginDiv,styles.floatingLabelStyle)}>
+                    <div className="header-content">
                     <RaisedButton 
                         label="Trở về"
                         secondary={true}
                         icon={<FaChevronLeft size={styles.headerIconButton.size}></FaChevronLeft>} 
                         onTouchTap={() => {
-                            store.dispatch(setIsCreated(false))
+                            store.dispatch(setHiddenLocation())
+                            store.dispatch(setIsEdit(false))
                         }}
                     />
+                    <RaisedButton 
+                        label={isEdit ? "Huỷ bỏ" : "Chỉnh sửa"}
+                        primary={!isEdit}
+                        icon={isEdit ?  <FaBan size={styles.headerIconButton.size}/> : <FaPencil size={styles.headerIconButton.size}/>} 
+                        onTouchTap={() => {
+                            console.log(isEdit);
+                            store.dispatch(setIsEdit(!isEdit))
+                        }}
+                         style={{
+                            'float': 'right',
+                        }}
+                    />
+                    {
+                        isEdit == true ? <RaisedButton 
+                            label="Lưu lại"
+                            primary={true}
+                            icon={<FaFloppyO size={styles.headerIconButton.size}/>} 
+                            onTouchTap={() => {
+                                var locationUpdate = store.getState().form.InfoLocationForm.values;
+                                console.log(locationUpdate);
+                                locationUpdate = mapFormValuesToItem(locationUpdate);
+                                locationUpdate.location_id = location._id;
+                                
+                                store.dispatch(updateLocation(locationUpdate))
+                            }}
+                            disabled={isEnableSaveButton}
+                            style={{
+                                'float': 'right',
+                                marginRight: 8
+                            }}
+                        /> : <RaisedButton 
+                            label="Xoá"
+                            secondary={false}
+                            icon={<FaTrash size={styles.headerIconButton.size}/>} 
+                            onTouchTap={() => {
+                                store.dispatch(deleteLocation(location))
+                            }}
+                            style={{
+                                'float': 'right',
+                                marginRight: 8
+                            }}
+                        />
+                    }
+                    </div>
                 </div>
                 <div className="create-event-content" style={marginDiv}>
                      <Field
@@ -60,6 +131,7 @@ const CreateLocation = (props) => ({
                         component={renderTextField}
                         label="Tên vị trí"
                         name="name"
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelStyle={styles.floatingLabelStyle}
@@ -68,6 +140,7 @@ const CreateLocation = (props) => ({
                         label="Chi tiết"
                         name="detail"
                         component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <div style={styles.divHorizontal}>
                         <Field
@@ -78,6 +151,7 @@ const CreateLocation = (props) => ({
                             component={renderTextField}
                             fullWidth={true}
                             errorText={errorSearch}
+                            disabled={!isEdit}
                         />
                         <RaisedButton label="Tìm" 
                             icon={<FaSearch size={styles.headerIconButton.size}></FaSearch>} 
@@ -99,6 +173,7 @@ const CreateLocation = (props) => ({
                                 marginLeft: 10,
                                 marginTop: 20,
                             }}
+                            disabled={!isEdit}
                         />
                     </div>
                     {
@@ -127,6 +202,7 @@ const CreateLocation = (props) => ({
                         name="links"
                         multiLine={true}
                         component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelText="Ảnh đại diện của địa điểm (nếu có)"
@@ -136,6 +212,7 @@ const CreateLocation = (props) => ({
                         multiLine={true}
                         name="image_url"
                         component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelText='Tags sự kiện (Ex: ""an uong", "nghi ngoi")'
@@ -144,6 +221,7 @@ const CreateLocation = (props) => ({
                         fullWidth={true}
                         name="tags"
                         component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelText='Trạng thái'
@@ -152,66 +230,30 @@ const CreateLocation = (props) => ({
                         fullWidth={true}
                         name="status"
                         component={renderSelectField}
+                        disabled={!isEdit}
                     >
                         {tags}
                     </Field>
                 </div>
 
-                <div className="create-event-footer" style={marginDiv}>
+                {/*<div className="create-event-footer" style={marginDiv}>
                     <RaisedButton label="Tạo" primary={true} onTouchTap={
-                            () => {
-                                const form = store.getState().form.CreateLocationForm;
-                                const validationMess = validateCanCreateLocation(form);
-
-                                if (validationMess === null) {
-                                    const dataEmit = mapFormValuesToLocation(form.values);
-                                    console.log(dataEmit);
-                                    store.dispatch(createLocation(dataEmit));
-                                    return;
-                                }
-                                store.dispatch(setSnackBarMessage(validationMess,2000));
+                            () =>  {
+                                {store.dispatch(createLocation(
+                                    mapFormValuesToItem(store.getState().form.InfoLocationForm.values)
+                                    ))}
                             }
                         }/>
                     <RaisedButton label="Làm mới" secondary={false} style={{marginLeft: 10}}/>
                  </div>
+                */}
             </div>
         )
     }
 })
 
-function validateCanCreateLocation(form) {
-    
-    if (form.values === undefined) {
-        return "Dữ liệu không thể rỗng";
-    }
-
-    const values = form.values;
-
-    if (!values) {
-        return "Dữ liệu không thể rỗng";
-    }
-
-    if (values.name === undefined) {
-        return "Tên địa điểm không thễ rỗng";
-    }
-
-    if (values.detail === undefined) {
-        return "Chi tiết địa điểm không thễ rỗng";
-    }
-    const searchData = store.getState().locations.dataSearch;
-    if (values.address === undefined) {
-        return "Địa chỉ địa điểm không thễ rỗng";
-    }
-
-    if (searchData === null) {
-        return "Vui lòng bấm nút tìm kiếm để lấy thông tin địa điểm";
-    }
-
-    return null;
-}
-
-function mapFormValuesToLocation(values) {
-    const searchData = store.getState().locations.dataSearch;
+function mapFormValuesToItem(values) {
+    const searchData = store.getState().locations.location.location_info;
     return {
         name: values.name,
         detail: values.detail,
@@ -221,7 +263,7 @@ function mapFormValuesToLocation(values) {
         }),
         image_url: values.image_url,
         location_info: searchData,
-        tags: values.tags === undefined ? [] : values.tags.split(",").map(value => {
+        tags: values.tags === undefined ? "" : values.tags.split(",").map(value => {
             return value.trim()
         }),
         status: values.status
@@ -229,21 +271,17 @@ function mapFormValuesToLocation(values) {
 }
 
 // export default connect(mapStateToProps)(CreateEvent);
-// export default reduxForm({
-//   form: 'CreateLocationForm',  // a unique identifier for this form
-// })(CreateLocation)
+var InfoLocationValueForm = reduxForm({
+  form: 'InfoLocationForm',  // a unique identifier for this form
+})(LocationItem)
 
-var CreateLocationValueForm = reduxForm({
-  form: 'CreateLocationForm',  // a unique identifier for this form
-})(CreateLocation)
-
-const selector = formValueSelector('CreateLocationForm') // <-- same as form name
-CreateLocationValueForm = connect(
+const selector = formValueSelector('InfoLocationForm') // <-- same as form name
+InfoLocationValueForm = connect(
   locations => {
     return {
       locations
     }
   }
-)(CreateLocationValueForm)
+)(InfoLocationValueForm)
 
-export default CreateLocationValueForm
+export default InfoLocationValueForm

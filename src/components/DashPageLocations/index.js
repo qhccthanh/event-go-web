@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getLocations, setIsCreated} from '../../reducer/locations/action';
+import {getLocations, setIsCreated, setShowLocation} from '../../reducer/locations/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -8,8 +8,9 @@ import styles from '../stylesScript';
 
 import CreateLocation from './CreateLocation';
 import LocationCard from './LocationCard';
+import LocationInfo from './LocationInfo';
 
-import {Paper, RaisedButton, Divider} from 'material-ui';
+import {Paper, RaisedButton, Divider, Avatar} from 'material-ui';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 import EVTable from '../Utility/GridList';
 
@@ -21,6 +22,19 @@ const Dashboard = (states,actions) => ({
   getContentPage() {
 
         let locationsStore = store.getState().locations;
+        const locations = locationsStore.data;
+        const locationCards =  locations.map(location => {
+                                return (
+                                <LocationCard 
+                                    itemTitle={location.name} 
+                                    itemSubtitle={location.detail}
+                                    itemAvatar={<Avatar src={location.image_url}></Avatar>}
+                                    onTouchTap={() => {
+                                        store.dispatch(setShowLocation(location));
+                                    }}
+                                    />);
+                            });
+
         if (locationsStore.isCreated === false && locationsStore.location === null) {
             return (
             <div key="content-events">
@@ -33,15 +47,14 @@ const Dashboard = (states,actions) => ({
                             store.dispatch(setIsCreated(true))
                         }}
                 />
-                <ButtonRefresh onTouchTap={() => {console.log("callsomething")}}/>
+                <ButtonRefresh onTouchTap={() => {
+                    store.dispatch(getLocations())
+                }}/>
                 </div>
                 <div className="content-events"> 
                 <div>
-                    <EVTable>
-                        <LocationCard 
-                            itemTitle="Nguyễn Văn Cừ CricleK" 
-                            itemSubtitle="229 Nguyễn Văn Cừ Q5"
-                            itemAvatar={<FaPlus size={40}></FaPlus>}></LocationCard>
+                    <EVTable {...locationCards}>
+                        
                     </EVTable>
                     <br/>
                     <Divider/>
@@ -58,9 +71,14 @@ const Dashboard = (states,actions) => ({
         }
 
         // Show detail event
-        if (locationsStore.item) {
-        return <LocationCard/>
+        if (locationsStore.location) {
+            return <LocationInfo/>
         }
+    },
+
+    componentWillMount() {
+        console.log("call componentWillMount");
+         store.dispatch(getLocations())
     },
 
     render() {

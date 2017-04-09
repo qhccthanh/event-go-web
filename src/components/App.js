@@ -21,6 +21,7 @@ import muiTheme from '../styles/theme-material';
 import {Snackbar} from 'material-ui';
 import {connect} from 'react-redux';
 import {store} from '../storeConfigure';
+import {checkSignIn} from '../reducer/authentication/action';
 
 const routes = [
     {
@@ -64,6 +65,7 @@ const routes = [
 const App = () => ({
 
     render() {
+        store.dispatch(checkSignIn());
         const routeApp = routes.map((route, index) => (
                 <Route
                     key={index}

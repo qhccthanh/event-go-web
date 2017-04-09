@@ -52,5 +52,10 @@ export default  {
   },
   leftIconButton: {
     size: 18
+  },
+  createLocationMap: {
+    height: 300,
+    marginBottom: 20,
+    marginTop: 20,
   }
 };

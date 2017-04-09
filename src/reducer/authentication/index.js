@@ -2,7 +2,8 @@ import {
     SIGN_IN_SUPPLIER,
     SET_ACCESS_TOKEN,
     SET_SUPPLIER_ID,
-    SET_AUTHENTICATE_FAILURE
+    SET_AUTHENTICATE_FAILURE,
+    SET_SIGN_OUT
 } from './action';
 
 const initialState = {
@@ -34,6 +35,14 @@ export default (state = initialState, action) => {
                 autheticating: false,
                 error: action.error,
             });
+        case SET_SIGN_OUT:
+            return {
+                ...state,
+                access_token: "",
+                supplier_id: "",
+                autheticating: false,
+                error: "",
+            }
         default:
             return state;
     }
