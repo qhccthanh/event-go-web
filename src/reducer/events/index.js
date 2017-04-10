@@ -2,13 +2,15 @@ import {
     SET_EVENTS,
     SET_IS_CREATED,
     SET_SHOW_DETAIL_EVENT,
-    SET_ADD_NEW_EVENT
+    SET_ADD_NEW_EVENT,
+    SET_IS_EDIT_EVENT
   } from './action';
 
 const initialState = {
   data: [],
   showEvent: null,
-  isCreated: false
+  isCreated: false,
+  isEdit: false
 };
 
 export default (state = initialState, action) => {
@@ -28,6 +30,11 @@ export default (state = initialState, action) => {
     case SET_ADD_NEW_EVENT:
       state.data.push(action.event)
       return state;
+    case SET_IS_EDIT_EVENT:
+      return {
+        ...state,
+        isEdit: action.isEdit
+      }
     default:
       return state;
   }

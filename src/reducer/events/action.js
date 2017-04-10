@@ -7,6 +7,7 @@ export const GET_EVENTS = 'GET_EVENTS';
 export const SET_IS_CREATED = 'SET_IS_CREATED';
 export const SET_SHOW_DETAIL_EVENT = 'SET_SHOW_DETAIL_EVENT';
 export const SET_ADD_NEW_EVENT = 'SET_ADD_NEW_EVENT';
+export const SET_IS_EDIT_EVENT = 'SET_IS_EDIT_EVENT';
 
 export const SET_ADD_NEW_AWARD = '';
 export const SET_OPEN_CREATE_AWARD = '';
@@ -47,6 +48,13 @@ export function setHideShowDetailEvent() {
   return {
     type: SET_SHOW_DETAIL_EVENT,
     showEvent: null
+  }
+}
+
+export function setIsEdit(isEdit) {
+  return {
+    type: SET_IS_EDIT_EVENT,
+    isEdit
   }
 }
 

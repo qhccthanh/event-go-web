@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Paper, RaisedButton, Divider,Chip, CardHeader} from 'material-ui';
+import {Paper, RaisedButton, Divider,Chip, CardHeader, Avatar} from 'material-ui';
 
 import '../../styles/styles.css';
 import '../../styles/App.css';
@@ -44,15 +44,17 @@ function randomIntFromInterval(min,max)
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
-const EventCard = ({event}) => ({
+const EventCard = () => ({
 
     render() {
+        const event = this.props;
+        
         return (
-            <Paper zDepth={3}>
+            <Paper zDepth={2}>
                 <CardHeader
-                title="Sinh nhât 20 năm"
-                subtitle="Sự kiện"
-                avatar={<FaCalendarTimesO size={32}/>}
+                title={event.name}
+                subtitle={event.sub_name}
+                avatar={<Avatar src={event.thumbnail_url}></Avatar>}
                 className="event-card-header"
                 />
                 
@@ -60,18 +62,10 @@ const EventCard = ({event}) => ({
                 
                 <div className="event-card-content">
                     <div className="div-default-topbottom"> 
-                        <div>
-                            Đã xem: 10
-                        </div>
-                        <div>
-                            Đang tham gia: 15
-                        </div>
-                        <div>
-                            Đã hoàn tất: 15
-                        </div>
-                        <div>
-                            Đã bỏ cuộc: 20
-                        </div>
+                        Bắt đầu: {event.start_time} <br/>
+                        Kết thúc: {event.end_time} <br/>
+                        Ngày tạo: {event.create_time} <br/>
+                        Giới hạn:{event.limit_user} người<br/>
                     </div>
                     <Divider></Divider>
                     <div className="div-default-topbottom">
@@ -89,7 +83,7 @@ const EventCard = ({event}) => ({
                     primary={true} 
                     className="event-card-footer-button"
                     onTouchTap={() => {
-                        store.dispatch(setShowDetailEvent({'asd': 1})) 
+                        store.dispatch(setShowDetailEvent(event)) 
                     }}
                     />
                     <RaisedButton label="Xoá" secondary={true} />

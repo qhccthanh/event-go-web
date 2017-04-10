@@ -17,12 +17,21 @@ import EVTable from '../Utility/GridList';
 import CardEvent from '../Utility/CardEvent';
 import CreateEvent from './CreateEvent';
 import EventCard from './EventCard';
+import EventInfo from './EventInfo';
 
 const Dashboard = (states,actions) => ({
 
   getContentPage() {
     let eventStore = store.getState().events;
     if (eventStore.isCreated === false && eventStore.showEvent === null) {
+      const events = eventStore.data;
+      const eventCards = events.map(event => {
+        return (
+          <EventCard {...event}>
+
+          </EventCard> 
+        );
+      })
         return (
           <div key="content-events">
             <div className="header-content">
@@ -38,8 +47,7 @@ const Dashboard = (states,actions) => ({
             </div>
             <div className="content-events"> 
               <div>
-                <EVTable>
-                  <EventCard/>
+                <EVTable {...eventCards}>
                 </EVTable>
                   <br/>
                   <Divider/>
@@ -57,7 +65,7 @@ const Dashboard = (states,actions) => ({
 
     // Show detail event
     if (eventStore.showEvent) {
-      return <CardEvent/>
+      return <EventInfo/>
     }
   },
 
@@ -70,7 +78,12 @@ const Dashboard = (states,actions) => ({
         </Paper>
       </div>
     )
-  }
+  },
+
+  componentWillMount() {
+        console.log("call componentWillMount");
+         store.dispatch(getEvents())
+    },
 });
 
 const mapStateToProps = ({events}) => ({

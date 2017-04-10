@@ -19,7 +19,7 @@ const LocationCard = ({itemTitle, itemSubtitle, itemAvatar, onTouchTap}) => ({
     render() {
         return (
             <div>
-                <Paper zDepth={3}>
+                <Paper zDepth={2}>
                     <CardHeader
                     title={itemTitle}
                     subtitle={itemSubtitle}

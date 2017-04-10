@@ -1,16 +1,18 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {setIsCreated, createEvent} from '../../reducer/events/action';
+import {createEvent, setHideShowDetailEvent, setIsEdit} from '../../reducer/events/action';
 import {}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
 import { RaisedButton, CardHeader } from 'material-ui';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, change, formValueSelector} from 'redux-form'
 import {renderTextField, renderDatePicker, renderTimePicker} from '../Utility/ReduxField';
+import {connect} from 'react-redux';
 
-import {FaChevronLeft}  from 'react-icons/lib/fa';
+import {FaChevronLeft, FaFloppyO, FaBan, FaPencil, FaTrash}  from 'react-icons/lib/fa';
+
 const marginDiv = {
                     marginLeft: 10,
                     marginTop: 8,
@@ -21,9 +23,69 @@ const marginDiv = {
 const CreateForm = (props) => ({
     
     render() {
-        // const {  } = props;
+        const event = store.getState().events.showEvent;
+        const isEdit = store.getState().events.isEdit || event === null;
+        const needRemoveWarnState = (store.getState().form.CreateEventForm === undefined || store.getState().form.CreateEventForm.values === undefined);
+        
+        if (event !== null) {
+            if (!isEdit){
+            store.dispatch(change('CreateEventForm','name',event.name));
+            store.dispatch(change('CreateEventForm','sub_name',event.sub_name));
+            store.dispatch(change('CreateEventForm','thumbnail_url',event.thumbnail_url));
+            store.dispatch(change('CreateEventForm','cover_url',event.cover_url));
+            store.dispatch(change('CreateEventForm','policy_url',event.policy_url));
+            store.dispatch(change('CreateEventForm','description',event.detail_url));
+            store.dispatch(change('CreateEventForm','limit_user',event.limit_user));
+            store.dispatch(change('CreateEventForm','tags',event.tags.join()));
+            store.dispatch(change('CreateEventForm','status',event.status));
+            } else if (needRemoveWarnState) {
+                store.dispatch(setHideShowDetailEvent());
+                store.dispatch(setIsEdit(false));
+                return <div></div>
+            }
+        }
+        const eventUpdate = store.getState().form.CreateEventForm.values;
+        const isEnableSaveButton = !(eventUpdate.name !== event.name || 
+        eventUpdate.sub_name !== event.sub_name ||
+         eventUpdate.thumbnail_url !== event.thumbnail_url ||
+          eventUpdate.status !== event.status || 
+          eventUpdate.tags !== event.tags.join());
+        
         return (
             <div>
+                <div>
+                    <RaisedButton 
+                        label={isEdit ? "Huỷ bỏ" : "Chỉnh sửa"}
+                        primary={!isEdit}
+                        icon={isEdit ?  <FaBan size={styles.headerIconButton.size}/> : <FaPencil size={styles.headerIconButton.size}/>} 
+                        onTouchTap={() => {
+                            store.dispatch(setIsEdit(!isEdit))
+                        }}
+                         style={{
+                            'float': 'right',
+                        }}
+                    />
+                    {
+                        isEdit == true ? <RaisedButton 
+                            label="Lưu lại"
+                            primary={true}
+                            icon={<FaFloppyO size={styles.headerIconButton.size}/>} 
+                            onTouchTap={() => {
+                                {/*var eventUpdate = store.getState().form.InfoItemForm.values;
+                                console.log(eventUpdate);
+                                eventUpdate = mapFormValuesToItem(eventUpdate);
+                                eventUpdate.item_id = item._id;
+                                console.log(eventUpdate.item_id);
+                                store.dispatch(updateItem(eventUpdate))*/}
+                            }}
+                            disabled={isEnableSaveButton}
+                            style={{
+                                'float': 'right',
+                                marginRight: 8
+                            }}
+                        /> : null
+                    }
+                </div>
                 <div className="create-event-content" style={marginDiv}>
                      <Field
                         floatingLabelStyle={styles.floatingLabelStyle}
@@ -32,6 +94,7 @@ const CreateForm = (props) => ({
                         component={renderTextField}
                         label="Tên sự kiện"
                         name="name"
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelStyle={styles.floatingLabelStyle}
@@ -40,31 +103,7 @@ const CreateForm = (props) => ({
                         label="Solgan or Subtitle display"
                         name="sub_name"
                         component={renderTextField}
-                    />
-                    <Field
-                        floatingLabelText="Link hình nhỏ 64x64 đại diện cho sự kiện"
-                        floatingLabelStyle={styles.floatingLabelStyle}
-                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                        fullWidth={true}
-                        name="thumbnail_url"
-                        component={renderTextField}
-                    />
-                    <Field
-                        floatingLabelText="Link hình lớn đại diện cho sự kiện"
-                        floatingLabelStyle={styles.floatingLabelStyle}
-                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                        fullWidth={true}
-                        name="cover_url"
-                        component={renderTextField}
-                    />
-                    <Field
-                        floatingLabelText="Điều khoản dịch vụ (nếu có)"
-                        floatingLabelStyle={styles.floatingLabelStyle}
-                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                        fullWidth={true}
-                        multiLine={true}
-                        name="policy_url"
-                        component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelText="Mô tả chi tiết"
@@ -74,6 +113,35 @@ const CreateForm = (props) => ({
                         multiLine={true}
                         name="description"
                         component={renderTextField}
+                        disabled={!isEdit}
+                    />
+                    <Field
+                        floatingLabelText="Link hình nhỏ 64x64 đại diện cho sự kiện"
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        name="thumbnail_url"
+                        component={renderTextField}
+                        disabled={!isEdit}
+                    />
+                    <Field
+                        floatingLabelText="Link hình lớn đại diện cho sự kiện"
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        name="cover_url"
+                        component={renderTextField}
+                        disabled={!isEdit}
+                    />
+                    <Field
+                        floatingLabelText="Điều khoản dịch vụ (nếu có)"
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        multiLine={true}
+                        name="policy_url"
+                        component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <div style={styles.divHorizontal}>
                         <Field
@@ -83,6 +151,7 @@ const CreateForm = (props) => ({
                           floatingLabelText="Ngày bắt đầu"
                           name="start_date"
                           component={renderDatePicker}
+                          disabled={!isEdit}
                           />
                         <Field
                             
@@ -90,6 +159,7 @@ const CreateForm = (props) => ({
                             floatingLabelText="Giờ bắt đầu"
                             name="start_time"
                             component={renderTimePicker}
+                            disabled={!isEdit}
                         />
                     </div>
                     <div style={styles.divHorizontal}>
@@ -100,6 +170,7 @@ const CreateForm = (props) => ({
                           floatingLabelText="Ngày kết thúc"
                           name="end_date"
                           component={renderDatePicker}
+                          disabled={!isEdit}
                           />
                         <Field
                            
@@ -107,6 +178,7 @@ const CreateForm = (props) => ({
                             floatingLabelText="Giờ kết thúc"
                             name="end_time"
                             component={renderTimePicker}
+                            disabled={!isEdit}
                         />
                     </div>
                     
@@ -117,6 +189,7 @@ const CreateForm = (props) => ({
                         fullWidth={true}
                         name="tags"
                         component={renderTextField}
+                        disabled={!isEdit}
                     />
                     <Field
                         floatingLabelText='Giới hạn người tham dự'
@@ -125,21 +198,46 @@ const CreateForm = (props) => ({
                         fullWidth={true}
                         name="limit_user"
                         component={renderTextField}
+                        disabled={!isEdit}
                     />
                 </div>
 
-                <div className="create-event-footer" style={marginDiv}>
-                    <RaisedButton label="Tạo" primary={true} onTouchTap={
-                            () => store.dispatch(
-                                createEvent(
-                                    mapFormValuesToEvent(store.getState().form.CreateEventForm.values)
-                                    )
-                                )
-                        }/>
-                    <RaisedButton label="Làm mới" secondary={false} style={{marginLeft: 10}}/>
-                 </div>
+                {this.getBottomView()}
             </div>
         )
+    },
+
+    getBottomView() {
+        const event = store.getState().events.showEvent;
+        const isEdit = store.getState().events.isEdit || event === null;
+        var content = <div></div>;
+
+        if (event !== null && !isEdit ) {
+            content = (
+                <div className="create-event-footer" style={marginDiv}>
+                    <RaisedButton label="Cập nhật" primary={true} onTouchTap={
+                        () => {
+
+                        }
+                    }/>
+                </div>
+            )
+        }
+
+        if (event === null) {
+            content = <div className="create-event-footer" style={marginDiv}>
+                    <RaisedButton label="Tạo" primary={true} onTouchTap={
+                        () => store.dispatch(
+                            createEvent(
+                                mapFormValuesToEvent(store.getState().form.CreateEventForm.values)
+                                )
+                            )
+                    }/>
+                <RaisedButton label="Làm mới" secondary={false} style={{marginLeft: 10}}/>
+            </div>;    
+        }
+
+        return content;
     }
 })
 
@@ -161,6 +259,17 @@ function mapFormValuesToEvent(values) {
 }
 
 // export default connect(mapStateToProps)(CreateEvent);
-export default reduxForm({
+var CreateEventValueForm = reduxForm({
   form: 'CreateEventForm',  // a unique identifier for this form
 })(CreateForm)
+
+const selector = formValueSelector('CreateEventForm') // <-- same as form name
+CreateEventValueForm = connect(
+  events => {
+    return {
+      events
+    }
+  }
+)(CreateEventValueForm)
+
+export default CreateEventValueForm
