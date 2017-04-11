@@ -8,7 +8,7 @@ import '../../styles/App.css';
 import {FaCalendarTimesO} from 'react-icons/lib/fa'; 
 import styles from '../stylesScript';
 import {store} from '../../storeConfigure';
-import {setShowDetailEvent} from '../../reducer/events/action';
+import {setShowDetailEvent, deleteEvent} from '../../reducer/events/action';
 
 var chipsFake = [
     <Chip style={styles.stylesChip.chip}
@@ -86,7 +86,10 @@ const EventCard = () => ({
                         store.dispatch(setShowDetailEvent(event)) 
                     }}
                     />
-                    <RaisedButton label="Xoá" secondary={true} />
+                    <RaisedButton label="Xoá" secondary={true} 
+                    onTouchTap={() => {
+                        store.dispatch(deleteEvent(event)) 
+                    }}/>
                 </div>
             </Paper>
         )

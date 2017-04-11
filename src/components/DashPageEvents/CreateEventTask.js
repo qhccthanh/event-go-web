@@ -6,14 +6,18 @@ import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
-import {Divider, RaisedButton, Dialog, FlatButton, Table, TableHeader,TableRow, TableBody} from 'material-ui';
+import {Divider, RaisedButton,
+     Dialog, FlatButton, Table,
+      TableHeader,TableRow, TableBody,
+      TableHeaderColumn
+    } from 'material-ui';
 import {FaPlusCircle} from 'react-icons/lib/fa';
-import {setIsCreated, setAddNewTask, setDeleteTask, setEditTask, setUpdateTask} from '../../reducer/tasks/action';
+import {setIsCreated, setAddNewTask, setDeleteTask, setEditTask, setUpdateTask, createNewTaskFromEventID, getTaskFromEventID} from '../../reducer/tasks/action';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 
 import CreateForm from './DashPageTasks/CreateForm';
 
-const CreateEventTask = () => ({
+const CreateEventTask = ({event_id}) => ({
 
     getContentPage() {
 
@@ -55,7 +59,7 @@ const CreateEventTask = () => ({
                         primary={true}
                         icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
                         onTouchTap={() => {
-                            store.dispatch(setAddNewTask());
+                            store.dispatch(createNewTaskFromEventID(event_id));
                         }}
                     />
                     <ButtonRefresh onTouchTap={() => {
@@ -125,6 +129,11 @@ const CreateEventTask = () => ({
     
     handleCloseCreate() {
         store.dispatch(setIsCreated(false));
+    },
+
+    componentWillMount() {
+        console.log("Called");
+        store.dispatch(getTaskFromEventID(event_id));
     }
 
 });

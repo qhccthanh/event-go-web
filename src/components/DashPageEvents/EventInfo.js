@@ -25,8 +25,9 @@ const EventInfo = (props) => ({
     
     render() {
         // const {  } = props;
+        let eventStore = store.getState().events;
         return (
-
+            
             <div>
                 <div className="create-event-header" style={Object.assign(marginDiv,styles.floatingLabelStyle)}>
                     <RaisedButton 
@@ -55,7 +56,7 @@ const EventInfo = (props) => ({
                     <Tab
                         label="Nhiệm vụ"
                     >
-                        <CreateEventTask></CreateEventTask>
+                        <CreateEventTask event_id={eventStore.showEvent._id}></CreateEventTask>
                     </Tab>
                     <Tab
                         label="Phần thưởng"

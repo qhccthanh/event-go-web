@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {createEvent, setHideShowDetailEvent, setIsEdit} from '../../reducer/events/action';
+import {createEvent, setHideShowDetailEvent, setIsEdit, updateEvent, deleteEvent} from '../../reducer/events/action';
 import {}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -19,6 +19,7 @@ const marginDiv = {
                     marginBottom: 8
                 }
 
+var dateFormat = require('dateformat');
 
 const CreateForm = (props) => ({
     
@@ -26,7 +27,9 @@ const CreateForm = (props) => ({
         const event = store.getState().events.showEvent;
         const isEdit = store.getState().events.isEdit || event === null;
         const needRemoveWarnState = (store.getState().form.CreateEventForm === undefined || store.getState().form.CreateEventForm.values === undefined);
-        
+        var defaultStartDate = new Date();
+        var defaultEndDate = new Date();
+
         if (event !== null) {
             if (!isEdit){
             store.dispatch(change('CreateEventForm','name',event.name));
@@ -34,6 +37,12 @@ const CreateForm = (props) => ({
             store.dispatch(change('CreateEventForm','thumbnail_url',event.thumbnail_url));
             store.dispatch(change('CreateEventForm','cover_url',event.cover_url));
             store.dispatch(change('CreateEventForm','policy_url',event.policy_url));
+            
+            defaultStartDate = new Date(event.start_time);
+            store.dispatch(change('CreateEventForm','start_date',defaultStartDate));
+            defaultEndDate = new Date(event.end_time);
+            store.dispatch(change('CreateEventForm','end_date',defaultEndDate));
+        
             store.dispatch(change('CreateEventForm','description',event.detail_url));
             store.dispatch(change('CreateEventForm','limit_user',event.limit_user));
             store.dispatch(change('CreateEventForm','tags',event.tags.join()));
@@ -49,7 +58,10 @@ const CreateForm = (props) => ({
         eventUpdate.sub_name !== event.sub_name ||
          eventUpdate.thumbnail_url !== event.thumbnail_url ||
           eventUpdate.status !== event.status || 
-          eventUpdate.tags !== event.tags.join());
+          eventUpdate.tags !== event.tags.join() || 
+          eventUpdate.start_date !== event.start_time ||
+           eventUpdate.end_date !== event.end_time
+          );
         
         return (
             <div>
@@ -71,12 +83,11 @@ const CreateForm = (props) => ({
                             primary={true}
                             icon={<FaFloppyO size={styles.headerIconButton.size}/>} 
                             onTouchTap={() => {
-                                {/*var eventUpdate = store.getState().form.InfoItemForm.values;
-                                console.log(eventUpdate);
-                                eventUpdate = mapFormValuesToItem(eventUpdate);
-                                eventUpdate.item_id = item._id;
-                                console.log(eventUpdate.item_id);
-                                store.dispatch(updateItem(eventUpdate))*/}
+                                var eventUpdate = store.getState().form.CreateEventForm.values;
+                                eventUpdate = mapFormValuesToEvent(eventUpdate);
+                                eventUpdate.event_id = event._id;
+
+                                store.dispatch(updateEvent(eventUpdate))
                             }}
                             disabled={isEnableSaveButton}
                             style={{
@@ -152,6 +163,7 @@ const CreateForm = (props) => ({
                           name="start_date"
                           component={renderDatePicker}
                           disabled={!isEdit}
+                          defaultDate={defaultStartDate}
                           />
                         <Field
                             
@@ -171,6 +183,7 @@ const CreateForm = (props) => ({
                           name="end_date"
                           component={renderDatePicker}
                           disabled={!isEdit}
+                          defaultDate={defaultEndDate}
                           />
                         <Field
                            
@@ -212,17 +225,19 @@ const CreateForm = (props) => ({
         const isEdit = store.getState().events.isEdit || event === null;
         var content = <div></div>;
 
-        if (event !== null && !isEdit ) {
+        /*if (event !== null && !isEdit ) {
             content = (
                 <div className="create-event-footer" style={marginDiv}>
                     <RaisedButton label="Cập nhật" primary={true} onTouchTap={
                         () => {
-
+                            store.dispatch(setUpdateEvent(mapFormValuesToEvent(
+                                store.getState().form.CreateEventForm.values
+                            )))
                         }
                     }/>
                 </div>
             )
-        }
+        }*/
 
         if (event === null) {
             content = <div className="create-event-footer" style={marginDiv}>

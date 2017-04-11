@@ -19,7 +19,16 @@ export function getTask() {
 export function getTaskFromEventID(event_id) {
   return dispatch => {
     axiosev.get('/events/'+event_id+'/tasks').then(response => {
+      console.log(response);
       dispatch(setTasks(response.data.data));
+    });
+  }
+}
+
+export function createNewTaskFromEventID(event_id) {
+  return dispatch => {
+    axiosev.post('/events/'+event_id+'/tasks').then(response => {
+        dispatch(setAddNewTask(response.data.data));
     });
   }
 }
