@@ -36,9 +36,10 @@ const EVTable = ({children}) => ({
                     </div>
                 })}*/}
                 { 
-                    elements.map((element) => {
+                    elements.map((element,index) => {
                         return (
-                            <div className="col-xs-12 col-md-6 col-lg-4 card-event-item">
+                            <div key={index}
+                                className="col-xs-12 col-md-6 col-lg-4 card-event-item">
                                 {element}
                             </div>
                         );

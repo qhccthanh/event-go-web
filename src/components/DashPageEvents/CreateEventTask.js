@@ -6,7 +6,7 @@ import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
-import {Divider, RaisedButton, Dialog, FlatButton} from 'material-ui';
+import {Divider, RaisedButton, Dialog, FlatButton, Table, TableHeader,TableRow, TableBody} from 'material-ui';
 import {FaPlusCircle} from 'react-icons/lib/fa';
 import {setIsCreated, setAddNewTask, setDeleteTask, setEditTask, setUpdateTask} from '../../reducer/tasks/action';
 import ButtonRefresh from '../Utility/ButtonRefresh';
@@ -44,6 +44,9 @@ const CreateEventTask = () => ({
             </div>)
         }
 
+        const tableStyle = styles.taskListTable.table;
+        const tableHeaderStyle = styles.taskListTable.tableHeader;
+        const tableBodyStyle = styles.taskListTable.tableBody;
         return (
             <div>
                 <div className="event-task-header">
@@ -52,7 +55,7 @@ const CreateEventTask = () => ({
                         primary={true}
                         icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
                         onTouchTap={() => {
-                            store.dispatch(setIsCreated(true));
+                            store.dispatch(setAddNewTask());
                         }}
                     />
                     <ButtonRefresh onTouchTap={() => {
@@ -64,7 +67,50 @@ const CreateEventTask = () => ({
                     marginBottom: 10
                 }}/>
                 <div className="event-task-list">
+                    <Table 
+                        fixedHeader={tableStyle.fixedHeader}
+                        fixedFooter={tableStyle.fixedFooter}
+                        selectable={tableStyle.selectable}
+                        multiSelectable={tableStyle.multiSelectable}
+                    >
+                        <TableHeader
+                            displaySelectAll={tableHeaderStyle.showCheckboxes}
+                            adjustForCheckbox={tableHeaderStyle.showCheckboxes}
+                            enableSelectAll={tableHeaderStyle.enableSelectAll}
+                        >
+                            <TableRow>
+                                <TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
+                                    Danh sách nhiệm vụ của sự kiện
+                                </TableHeaderColumn>
+                            </TableRow>
+                            <TableRow>
+                                <TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
+                                <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
+                                <TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody
+                            displayRowCheckbox={tableBodyStyle.showCheckboxes}
+                            deselectOnClickaway={tableBodyStyle.deselectOnClickaway}
+                            showRowHover={tableBodyStyle.showRowHover}
+                            stripedRows={tableBodyStyle.stripedRows}
+                        >
+                            {/*{tableData.map( (row, index) => (
+                                <TableRow
+                                 key={index}
+                                 selected={row.selected}
+                                 onTouchTap={() => {
 
+                                 }}
+                                 >
+                                    <TableRowColumn>{index}</TableRowColumn>
+                                    <TableRowColumn>{row.name}</TableRowColumn>
+                                    <TableRowColumn>{row.status}</TableRowColumn>
+                                </TableRow>
+                            ))}*/}
+                        </TableBody>
+
+                    </Table>
                 </div>
             </div>
         );

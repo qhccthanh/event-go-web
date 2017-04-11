@@ -57,5 +57,25 @@ export default  {
     height: 300,
     marginBottom: 20,
     marginTop: 20,
+  },
+  taskListTable: {
+    table: {
+      fixedHeader: true,
+      fixedFooter: false,
+      selectable: true,
+      multiSelectable: false,
+    },
+    tableHeader: {
+      displaySelectAll: true,
+      adjustForCheckbox: false,
+      enableSelectAll: false
+    },
+    tableBody: {
+      showCheckboxes : false,
+      deselectOnClickaway: false,
+      showRowHover: false,
+      stripedRows: false
+    }
+    
   }
 };
