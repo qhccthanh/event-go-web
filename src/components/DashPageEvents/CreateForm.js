@@ -22,63 +22,85 @@ const marginDiv = {
 var dateFormat = require('dateformat');
 
 const CreateForm = (props) => ({
-    
+    componentWillMount() {
+            const event = store.getState().events.showEvent;
+            const isEdit = store.getState().events.isEdit || event === null;
+            var defaultStartDate = new Date();
+            var defaultEndDate = new Date();
+
+            if (event !== null && !isEdit) {    
+                store.dispatch(change('CreateEventForm','name',event.name));
+                store.dispatch(change('CreateEventForm','sub_name',event.sub_name));
+                store.dispatch(change('CreateEventForm','thumbnail_url',event.thumbnail_url));
+                store.dispatch(change('CreateEventForm','cover_url',event.cover_url));
+                store.dispatch(change('CreateEventForm','policy_url',event.policy_url));
+                
+                defaultStartDate = new Date(event.start_time);
+                store.dispatch(change('CreateEventForm','start_date',defaultStartDate));
+                defaultEndDate = new Date(event.end_time);
+                store.dispatch(change('CreateEventForm','end_date',defaultEndDate));
+            
+                store.dispatch(change('CreateEventForm','description',event.detail_url));
+                store.dispatch(change('CreateEventForm','limit_user',event.limit_user));
+                store.dispatch(change('CreateEventForm','tags',event.tags.join()));
+                store.dispatch(change('CreateEventForm','status',event.status));
+            }
+            
+    },
     render() {
         const event = store.getState().events.showEvent;
         const isEdit = store.getState().events.isEdit || event === null;
         const needRemoveWarnState = (store.getState().form.CreateEventForm === undefined || store.getState().form.CreateEventForm.values === undefined);
+        
         var defaultStartDate = new Date();
+        
         var defaultEndDate = new Date();
+        if (event) {
+            defaultStartDate = new Date(event.start_time);
+            defaultEndDate = new Date(event.end_time);
+        }
+        
 
+        var eventUpdate = null;
+        var isEnableSaveButton = false ;
         if (event !== null) {
             if (!isEdit){
-            store.dispatch(change('CreateEventForm','name',event.name));
-            store.dispatch(change('CreateEventForm','sub_name',event.sub_name));
-            store.dispatch(change('CreateEventForm','thumbnail_url',event.thumbnail_url));
-            store.dispatch(change('CreateEventForm','cover_url',event.cover_url));
-            store.dispatch(change('CreateEventForm','policy_url',event.policy_url));
             
-            defaultStartDate = new Date(event.start_time);
-            store.dispatch(change('CreateEventForm','start_date',defaultStartDate));
-            defaultEndDate = new Date(event.end_time);
-            store.dispatch(change('CreateEventForm','end_date',defaultEndDate));
-        
-            store.dispatch(change('CreateEventForm','description',event.detail_url));
-            store.dispatch(change('CreateEventForm','limit_user',event.limit_user));
-            store.dispatch(change('CreateEventForm','tags',event.tags.join()));
-            store.dispatch(change('CreateEventForm','status',event.status));
             } else if (needRemoveWarnState) {
                 store.dispatch(setHideShowDetailEvent());
                 store.dispatch(setIsEdit(false));
                 return <div></div>
             }
+            eventUpdate = store.getState().form.CreateEventForm.values;
+            isEnableSaveButton = !(eventUpdate.name !== event.name || 
+                eventUpdate.sub_name !== event.sub_name ||
+                eventUpdate.thumbnail_url !== event.thumbnail_url ||
+                eventUpdate.status !== event.status || 
+                eventUpdate.tags !== event.tags.join() || 
+                eventUpdate.start_date !== event.start_time ||
+                eventUpdate.end_date !== event.end_time
+            );
         }
-        const eventUpdate = store.getState().form.CreateEventForm.values;
-        const isEnableSaveButton = !(eventUpdate.name !== event.name || 
-        eventUpdate.sub_name !== event.sub_name ||
-         eventUpdate.thumbnail_url !== event.thumbnail_url ||
-          eventUpdate.status !== event.status || 
-          eventUpdate.tags !== event.tags.join() || 
-          eventUpdate.start_date !== event.start_time ||
-           eventUpdate.end_date !== event.end_time
-          );
+        
         
         return (
             <div>
                 <div>
-                    <RaisedButton 
-                        label={isEdit ? "Huỷ bỏ" : "Chỉnh sửa"}
-                        primary={!isEdit}
-                        icon={isEdit ?  <FaBan size={styles.headerIconButton.size}/> : <FaPencil size={styles.headerIconButton.size}/>} 
-                        onTouchTap={() => {
-                            store.dispatch(setIsEdit(!isEdit))
-                        }}
-                         style={{
-                            'float': 'right',
-                        }}
-                    />
                     {
-                        isEdit == true ? <RaisedButton 
+                        event !== null ? <RaisedButton 
+                            label={isEdit ? "Huỷ bỏ" : "Chỉnh sửa"}
+                            primary={!isEdit}
+                            icon={isEdit ?  <FaBan size={styles.headerIconButton.size}/> : <FaPencil size={styles.headerIconButton.size}/>} 
+                            onTouchTap={() => {
+                                store.dispatch(setIsEdit(!isEdit))
+                            }}
+                            style={{
+                                'float': 'right',
+                            }}
+                        /> : null
+                    }
+                    {
+                        isEdit && event !== null == true ? <RaisedButton 
                             label="Lưu lại"
                             primary={true}
                             icon={<FaFloppyO size={styles.headerIconButton.size}/>} 

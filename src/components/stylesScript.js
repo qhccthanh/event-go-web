@@ -53,6 +53,10 @@ export default  {
   leftIconButton: {
     size: 18
   },
+  buttonMargin: {
+    marginLeft: 4,
+    marginRight: 4
+  },
   createLocationMap: {
     height: 300,
     marginBottom: 20,
@@ -62,20 +66,20 @@ export default  {
     table: {
       fixedHeader: true,
       fixedFooter: false,
-      selectable: true,
+      selectable: false,
       multiSelectable: false,
     },
     tableHeader: {
-      displaySelectAll: true,
-      adjustForCheckbox: false,
-      enableSelectAll: false
+      enableSelectAll: false,
+      showCheckboxes : false,
     },
     tableBody: {
-      showCheckboxes : false,
       deselectOnClickaway: false,
-      showRowHover: false,
-      stripedRows: false
+      showRowHover: true,
+      stripedRows: true
+    },
+    tableRow: {
+      // textAlign: 'center'
     }
-    
   }
 };

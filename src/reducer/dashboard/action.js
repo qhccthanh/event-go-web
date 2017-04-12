@@ -19,10 +19,7 @@ export function setSnackBarMessage(message, autoHideDuration) {
         setTimeout(() => {
             store.dispatch({
                 type: SET_SHOW_SNACK_BAR,
-                snackBar: {
-                    message: "",
-                    autoHideDuration: 0
-                }
+                snackBar: null
             });
         }, autoHideDuration);
     }

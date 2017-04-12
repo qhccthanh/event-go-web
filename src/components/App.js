@@ -75,7 +75,7 @@ const App = () => ({
                 />
         ));
         var snackBar = store.getState().dashboard.snackBar;
-        if (snackBar !== null) {
+        if (snackBar !== null && snackBar !== undefined) {
             snackBar = <Snackbar
                     open={true}
                     message={snackBar.message}
