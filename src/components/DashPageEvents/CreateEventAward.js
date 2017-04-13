@@ -84,7 +84,7 @@ const CreateAwardAward = ({event_id}) => ({
 
         return (
             <div>
-                <div className="event-award-header">
+                <div className="event-task-header">
                     <RaisedButton 
                         label="Thêm phần thưởng"
                         primary={true}
@@ -139,16 +139,16 @@ const CreateAwardAward = ({event_id}) => ({
                                     store.dispatch(setEditAward(award));
                                  }}
                                  >
-                                    <TableRowColumn style={styles.awardListTable.tableRow}>
+                                    <TableRowColumn style={styles.taskListTable.tableRow}>
                                         {award.name}
                                     </TableRowColumn>
-                                    <TableRowColumn   style={styles.awardListTable.tableRow}>
+                                    <TableRowColumn   style={styles.taskListTable.tableRow}>
                                         {award.detail}
                                     </TableRowColumn>
-                                    <TableRowColumn  style={styles.awardListTable.tableRow}>
+                                    <TableRowColumn  style={styles.taskListTable.tableRow}>
                                         {datefomart(award.created_date,'dd/mm/yy')}
                                     </TableRowColumn>
-                                    <TableRowColumn  style={styles.awardListTable.tableRow}>
+                                    <TableRowColumn  style={styles.taskListTable.tableRow}>
                                         {award.status}
                                     </TableRowColumn>
                                 </TableRow>
@@ -194,7 +194,7 @@ function checkUpdatable(award) {
         award.image_url !== values.image_url ||
         award.contact !== values.contact || 
         award.award_type !== values.award_type || 
-        award.item_id !== values.item_id ||  
+        // award.item_id !== values.item_id ||  
         award.tags.join() !== values.tags 
     )
 }

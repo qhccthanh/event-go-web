@@ -61,7 +61,7 @@ const EventInfo = (props) => ({
                     <Tab
                         label="Phần thưởng"
                     >
-                        <CreateEventAward></CreateEventAward>
+                        <CreateEventAward event_id={eventStore.showEvent._id}></CreateEventAward>
                     </Tab>
                 </Tabs>
             </div>
