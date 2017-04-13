@@ -11,12 +11,6 @@ export const SET_IS_EDIT_EVENT = 'SET_IS_EDIT_EVENT';
 export const DELETE_DATA_EVENT = 'DELETE_DATA_EVENT';
 export const SET_UPDATE_EVENT = 'SET_UPDATE_EVENT';
 
-export const SET_ADD_NEW_AWARD = '';
-export const SET_OPEN_CREATE_AWARD = '';
-export const SET_DELETE_AWARD = '';
-export const SET_IS_EDIT_AWARD = '';
-export const SET_UPDATE_AWARD = '';
-
 export function getEvents() {
   return dispatch => {
     axiosev.get('/suppliers/events').then(response => {
