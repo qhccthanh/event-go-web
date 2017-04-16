@@ -13,7 +13,16 @@ export const SET_IS_EDIT = 'SET_IS_EDIT';
 export const SET_UPDATE_LOCATION = 'SET_UPDATE_LOCATION';
 export const SET_SEARCH_ADDRESS = 'SET_SEARCH_ADDRESS';
 export const SET_SEARCH_ADDRESS_ERROR = 'SET_SEARCH_ADDRESS_ERROR';
+export const SET_SELECTS_LOCATION_TASK = 'SET_SELECTS_LOCATION_TASK';
+
 var querystring = require('querystring');
+
+export function setSelectsLoactionTask(selectValues) {
+  return {
+    type: SET_SELECTS_LOCATION_TASK,
+    selectValues
+  }
+}
 
 export function getSearchAddress(address) {
   

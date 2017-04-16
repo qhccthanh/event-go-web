@@ -4,13 +4,16 @@ import {
     SET_IS_CREATED,
     SET_DELETE_TASK,
     SET_EDIT_TASK,
-    SET_UPDATE_TASK
+    SET_UPDATE_TASK,
+    SET_DIALOG_CREATE_TASK
   } from './action';
 
 const initialState = {
   data: [],
   isCreated: false,
-  task: null
+  task: null,
+  dialogTask: null,
+
 };
 
 export default (state = initialState, action) => {
@@ -50,6 +53,12 @@ export default (state = initialState, action) => {
           return task._id !== action.task._id ? task : action.task;
         })
       }
+    case SET_DIALOG_CREATE_TASK: {
+      return {
+        ...state,
+        dialogTask: action.dialogTask
+      }
+    }
     default:
       return state;
   }

@@ -6,22 +6,25 @@ import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
-import {Divider, RaisedButton,
-     Dialog, FlatButton, Table,
-      TableHeader,TableRow, TableBody,
-      TableHeaderColumn, TableRowColumn, IconButton
+import {Divider, RaisedButton, FlatButton,
+     Dialog, Table, TableHeader,TableRow, TableBody,IconMenu,
+      TableHeaderColumn, TableRowColumn, IconButton, MenuItem
     } from 'material-ui';
 import {FaPlusCircle, FaTrash} from 'react-icons/lib/fa';
-import {setIsCreated, setAddNewTask,
-     deleteTask, setEditTask,updateTask, createNewTaskFromEventID, 
-      getTaskFromEventID} from '../../reducer/tasks/action';
+import {setIsCreated, setAddNewTask,setEditTask, createNewTaskFromEventID, 
+      getTaskFromEventID, setDialogCreateTask, deleteTask} from '../../reducer/tasks/action';
 
 import {setSnackBarMessage} from '../../reducer/dashboard/action';
 
 import ButtonRefresh from '../Utility/ButtonRefresh';
 
-import CreateForm from './DashPageTasks/CreateForm';
+import TaskInfo from './DashPageTasks/TaskInfo';
+import TaskCard from './DashPageTasks/TaskCard';
+import LocationTable from './DashPageTasks/LocationTable';
+import EVTable from '../Utility/GridList';
+
 var datefomart = require('dateformat');
+
 
 const CreateEventTask = ({event_id}) => ({
 
@@ -39,60 +42,71 @@ const CreateEventTask = ({event_id}) => ({
         
         if (task !== null) {
 
-            return (<div> 
-                <CreateForm></CreateForm>
-                <Divider></Divider>
-                <div style={{
-                    ...styles.divHorizontal,
-                    'float': 'right'
-                }}>
-                    <RaisedButton
-                        label="Cập nhật"
-                        primary={true}
-                        keyboardFocused={true}
-                        onTouchTap={() => {
-                            if (!checkUpdatable(task)) {
-                                store.dispatch(setSnackBarMessage("Vui lòng thay đổi dữ liệu",2000));
-                                return;
-                            }
-                            var taskUpdate = store.getState().form.CreateTaskForm.values;                            
-                            taskUpdate = mapFormValuesToTask(taskUpdate);
-                            taskUpdate._id = task._id;
-                            taskUpdate.task_id = task._id;
-                            store.dispatch(updateTask(taskUpdate,event._id))
-                        }}
-                        style={styles.buttonMargin}
-                        
-                    />
-                    <RaisedButton
-                        label="Xoá"
-                        secondary={true}
-                        onTouchTap={() => {
-                            store.dispatch(deleteTask(task,event._id));
-                        }}
-                        style={styles.buttonMargin}
-                    />
-                    <FlatButton
-                    label="Trở lại"
-                    primary={true}
-                    onTouchTap={this.handleCloseCreate}
-                    style={styles.buttonMargin}
-                    />,
-                </div>
-            </div>)
+            return (<TaskInfo {...task}></TaskInfo>)
         }
-
+        const dialogCreateTask = store.getState().tasks.dialogTask
+        var dialog = null;
+        if (dialogCreateTask !== null) {
+            dialogCreateTask.actions.push(
+                <FlatButton
+                    label="Huỷ bỏ"
+                    primary={true}
+                    onTouchTap={() => {
+                        store.dispatch(setDialogCreateTask(null))
+                    }}
+                />
+            )
+            dialog = <Dialog
+                title="Chọn yêu cầu"
+                actions={dialogCreateTask.actions}
+                modal={false}
+                open={true}
+                autoScrollBodyContent={true}
+                >
+                {dialogCreateTask.content}
+            </Dialog>
+        }
         return (
             <div>
+                {dialog}
                 <div className="event-task-header">
-                    <RaisedButton 
-                        label="Thêm nhiệm vụ"
-                        primary={true}
-                        icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
-                        onTouchTap={() => {
-                            store.dispatch(createNewTaskFromEventID(event_id));
-                        }}
-                    />
+                    <IconMenu
+                        iconButtonElement={
+                        <RaisedButton
+                            label="Thêm nhiệm vụ"
+                            primary={true}
+                            icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
+                        >
+                            
+                        </RaisedButton>}
+                        
+                        >
+                        <MenuItem value="1" primaryText="Tạo mới" 
+                            onTouchTap={() => {
+                                store.dispatch(createNewTaskFromEventID(event_id));
+                            }}
+                        />
+                        <MenuItem value="2" primaryText="Tạo với danh sách địa điểm"
+                            onTouchTap={() => {
+                                const dialogTask = {
+                                    content: <LocationTable></LocationTable>,
+                                    actions: [
+                                        <FlatButton
+                                            label="Tạo"
+                                            primary={true}
+                                            keyboardFocused={true}
+                                            onTouchTap={() => {
+
+                                            }}
+                                        />,
+                                    ]
+                                };
+                                store.dispatch(setDialogCreateTask(dialogTask))
+                            }}
+                         />
+                        <MenuItem value="3" primaryText="Tạo với danh sách vật phẩm" />
+                        <MenuItem value="4" primaryText="Tạo với danh sách câu hỏi" />
+                    </IconMenu>
                     <ButtonRefresh onTouchTap={() => {
                         store.dispatch(getTaskFromEventID(event_id));
                     }}/>
@@ -102,8 +116,47 @@ const CreateEventTask = ({event_id}) => ({
                     marginBottom: 10
                 }}/>
                 <div className="event-task-list">
-                    <Table 
-                        fixedHeader={tableStyle.fixedHeader}
+                    <EVTable {...taskData.map( (task, index) => 
+                         <TaskCard {...task}
+                            detailTouchTap={() => {
+                                store.dispatch(setEditTask(task))
+                            }}
+                            deleteTouchTap={() => {
+                                store.dispatch(deleteTask(task,event._id));
+                            }}
+                         />   
+                    )} isFullWidth={true}/>
+                </div>
+            </div>
+        );
+    },
+
+    render() {
+        const content = this.getContentPage();
+        return (
+            content   
+        )
+    },
+    
+    handleCloseCreate() {
+        store.dispatch(setEditTask(null));
+    },
+
+    componentWillMount() {
+        store.dispatch(getTaskFromEventID(event_id));
+    }
+
+});
+
+const mapStateToProps = ({tasks}) => ({
+    tasks
+});
+
+export default connect(mapStateToProps)(CreateEventTask);
+
+
+{/*<Table 
+                        fixedHeader={true}
                         fixedFooter={tableStyle.fixedFooter}
                         selectable={tableStyle.selectable}
                         multiSelectable={tableStyle.multiSelectable}
@@ -116,9 +169,14 @@ const CreateEventTask = ({event_id}) => ({
                             <TableRow>
                                 <TableHeaderColumn colSpan="4" tooltip="Super Header" style={{textAlign: 'center', fontSize: 22}}>
                                     Danh sách nhiệm vụ của sự kiện
+                                    <Divider style={{
+                                        marginTop: 10,
+                                        marginBottom: 10
+                                    }}/>
                                 </TableHeaderColumn>
                             </TableRow>
                             <TableRow>
+                                
                                 <TableHeaderColumn tooltip="Tên">Tên</TableHeaderColumn>
                                 <TableHeaderColumn  tooltip="Chi tiết">Chi tiết</TableHeaderColumn>
                                 <TableHeaderColumn tooltip="Khởi tạo">Khởi tạo</TableHeaderColumn>
@@ -155,75 +213,4 @@ const CreateEventTask = ({event_id}) => ({
                             ))}
                         </TableBody>
 
-                    </Table>
-                </div>
-            </div>
-        );
-    },
-
-    render() {
-        const content = this.getContentPage();
-        return (
-            content   
-        )
-    },
-    
-    handleCloseCreate() {
-        store.dispatch(setEditTask(null));
-    },
-
-    componentWillMount() {
-        store.dispatch(getTaskFromEventID(event_id));
-    }
-
-});
-
-const mapStateToProps = ({tasks}) => ({
-    tasks
-});
-
-function checkUpdatable(task) {
-    const form = store.getState().form.CreateTaskForm;
-    if (form === null || form  === undefined) {
-        return false;
-    }
-    const values = form.values;
-    return (
-        task.name !== values.name ||
-        task.detail !== values.detail ||
-        task.thumbnail_url !== values.thumbnail_url ||
-        task.cover_url !== values.cover_url || 
-        task.detail_url !== values.detail_url || 
-        task.task_type !== values.task_type || 
-        task.task_determine !== values.task_determine || 
-        task.previous_tasks_require.join() !== values.previous_tasks_require || 
-        task.next_tasks.join() !== values.next_tasks || 
-        task.tags.join() !== values.tags 
-    )
-}
-
-function mapFormValuesToTask(values) {
-    if (!values || values === undefined) {
-        return {};
-    }
-
-    return {
-        name: values.name === undefined ? "" : values.name,
-        detail: values.detail === undefined ? "" : values.detail,
-        thumbnail_url: values.thumbnail_url === undefined ? "" : values.thumbnail_url,
-        cover_url: values.cover_url === undefined ? "" : values.cover_url,
-        detail_url: values.detail_url === undefined ? "" : values.detail_url,
-        task_type: values.task_type === undefined ? "" : values.task_type,
-        task_determine: values.task_determine === undefined ? "" : values.task_determine,
-        max_num_finish_task: values.max_num_finish_task === undefined ? 0 : values.max_num_finish_task,
-        previous_tasks_require: values.previous_tasks_require === undefined ? [] : [values.previous_tasks_require],
-        next_tasks: values.next_tasks === undefined ? [] : [values.next_tasks],
-        tags: values.tags === undefined ? [] : values.tags.split(",").map(value => {
-            return value.trim()
-        }),
-        status: values.status === undefined ? "" : values.status
-    }
-}
-
-export default connect(mapStateToProps)(CreateEventTask);
-
+                    </Table>*/}

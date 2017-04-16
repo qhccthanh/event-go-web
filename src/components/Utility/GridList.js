@@ -16,7 +16,7 @@ for (var index = 0; index < 12; index++) {
     dataFake.push(dataFake[0]);
 }
 
-const EVTable = ({children}) => ({
+const EVTable = ({isFullWidth}) => ({
     render() {
         
         var items = this.props;
@@ -25,6 +25,10 @@ const EVTable = ({children}) => ({
         allKeys.forEach(function(key) {
             elements.push(items[key]);
         }, this);
+        var rowClass = "col-xs-12 col-md-6 col-lg-4 card-event-item";
+        if (isFullWidth !== undefined && isFullWidth === true) {
+            rowClass = "col-xs-12 card-event-item";
+        }
         
         return (
             <div className="col-xs-12">
@@ -39,7 +43,7 @@ const EVTable = ({children}) => ({
                     elements.map((element,index) => {
                         return (
                             <div key={index}
-                                className="col-xs-12 col-md-6 col-lg-4 card-event-item">
+                                className={rowClass}>
                                 {element}
                             </div>
                         );

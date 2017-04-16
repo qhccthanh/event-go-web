@@ -7,8 +7,16 @@ export const SET_IS_CREATED = 'SET_IS_CREATED_TASK';
 export const SET_DELETE_TASK = 'SET_DELETE_TASK';
 export const SET_EDIT_TASK = 'SET_EDIT_TASK';
 export const SET_UPDATE_TASK = 'SET_UPDATE_TASK';
+export const SET_DIALOG_CREATE_TASK = 'SET_DIALOG_CREATE_TASK';
 
 import {setSnackBarMessage} from '../dashboard/action';
+
+export function setDialogCreateTask(dialogTask) {
+  return {
+    type: SET_DIALOG_CREATE_TASK,
+    dialogTask
+  }
+}
 
 export function getTask() {
   return dispatch => {
@@ -25,6 +33,27 @@ export function getTaskFromEventID(event_id) {
       dispatch(setTasks(response.data.data));
     });
   }
+}
+
+export function createTaskWithLocation(location,event_id) {
+  return dispatch => {
+    const newTask = {
+      'name': 'Tìm ' + location.name,
+      'sub_name': location.detail,
+      'thumbnail_url': location.image_url,
+      'task_type': 'location',
+      'task_info': location,
+      'description': 'Đến địa điểm ' + location.name + ' và chụp ảnh, checkin facebook vs hastag #circleK'
+    }
+    axiosev.post('/events/'+event_id+'/tasks', newTask)
+      .then(response => {
+        dispatch(setAddNewTask(response.data.data));
+        dispatch(setSnackBarMessage("Tạo nhiệm vụ "+ location.name +" thành công" , 1000)); 
+      })
+      .error(error => {
+        dispatch(setSnackBarMessage("Tạo nhiệm vụ thất bại" , 1000)); 
+      });
+  }  
 }
 
 export function createNewTaskFromEventID(event_id) {

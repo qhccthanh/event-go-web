@@ -7,7 +7,8 @@ import {
     SET_IS_EDIT,
     SET_UPDATE_LOCATION,
     SET_SEARCH_ADDRESS,
-    SET_SEARCH_ADDRESS_ERROR
+    SET_SEARCH_ADDRESS_ERROR,
+    SET_SELECTS_LOCATION_TASK
   } from './action';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   location: null,
   isEdit: false,
   dataSearch: null,
-  errorSearch: ""
+  errorSearch: "",
+  selectValues: "none"
 };
 
 export default (state = initialState, action) => {
@@ -70,6 +72,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         errorSearch: action.errorSearch
+      }
+    case SET_SELECTS_LOCATION_TASK: 
+      return {
+        ...state,
+        selectValues: action.selectValues
       }
     default:
       return state;

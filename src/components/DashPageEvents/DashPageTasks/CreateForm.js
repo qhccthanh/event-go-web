@@ -25,14 +25,15 @@ const tags = [
 ];
 
 const taskType = [
-  <MenuItem key={1} value="item" primaryText="Vật phẩm" />,
-  <MenuItem key={2} value="checkin" primaryText="Checkin" />,
-  <MenuItem key={3} value="question" primaryText="Câu hỏi" />,
+  <MenuItem key={1} value="item" primaryText="Tìm vật phẩm" />,
+  <MenuItem key={2} value="location" primaryText="Tìm địa điểm" />,
+  <MenuItem key={3} value="question" primaryText="Trả lời câu hỏi" />,
 ];
 
-const taskDetermine = [
+const taskValidateType = [
   <MenuItem key={2} value="input" primaryText="Nhập dữ liệu" />,
   <MenuItem key={3} value="share" primaryText="Chia sẽ" />,
+  <MenuItem key={1} value="photo" primaryText="Chụp ảnh xác nhận" />,
 ];
 
 var required_tasks = [
@@ -64,13 +65,14 @@ const CreateTaskForm = (states,actions) => ({
             return;
         }
         store.dispatch(change('CreateTaskForm','name',task.name));
-        store.dispatch(change('CreateTaskForm','detail',task.detail));
+        store.dispatch(change('CreateTaskForm','sub_name',task.sub_name));
+        store.dispatch(change('CreateTaskForm','description',task.description));
         store.dispatch(change('CreateTaskForm','thumbnail_url',task.thumbnail_url));
         store.dispatch(change('CreateTaskForm','cover_url',task.cover_url));
         store.dispatch(change('CreateTaskForm','policy_url',task.policy_url));
         store.dispatch(change('CreateTaskForm','detail_url',task.detail_url));
         store.dispatch(change('CreateTaskForm','task_type',task.task_type));
-        store.dispatch(change('CreateTaskForm','task_determine',task.task_determine));
+        store.dispatch(change('CreateTaskForm','task_validate_type',task.task_validate_type));
         store.dispatch(change('CreateTaskForm','tags',task.tags.join()));
         store.dispatch(change('CreateTaskForm','max_num_finish_task',task.max_num_finish_task));
         store.dispatch(change('CreateTaskForm','status',task.status));
@@ -96,8 +98,16 @@ const CreateTaskForm = (states,actions) => ({
                 floatingLabelStyle={styles.floatingLabelStyle}
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                 fullWidth={true}
-                label="Chi tiết nhiệm vụ"
-                name="detail"
+                label="Tên phụ"
+                name="sub_name"
+                component={renderTextField}
+            />
+            <Field
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                fullWidth={true}
+                label="Mô tả"
+                name="description"
                 component={renderTextField}
             />
             <Field
@@ -139,10 +149,10 @@ const CreateTaskForm = (states,actions) => ({
                 floatingLabelStyle={styles.floatingLabelStyle}
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                 fullWidth={true}
-                name="task_determine"
+                name="task_validate_type"
                 component={renderSelectField}
             >
-            {taskDetermine}
+            {taskValidateType}
             </Field>
             <Field
                 floatingLabelText='Số nhiệm vụ hoàn thành tối đa'

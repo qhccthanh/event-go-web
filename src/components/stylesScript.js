@@ -53,6 +53,9 @@ export default  {
   leftIconButton: {
     size: 18
   },
+  taskIconButton: {
+    size: 25
+  },
   buttonMargin: {
     marginLeft: 4,
     marginRight: 4
@@ -66,20 +69,25 @@ export default  {
     table: {
       fixedHeader: true,
       fixedFooter: false,
-      selectable: false,
+      selectable: true,
       multiSelectable: false,
     },
     tableHeader: {
       enableSelectAll: false,
-      showCheckboxes : false,
+      showCheckboxes : true,
     },
     tableBody: {
-      deselectOnClickaway: false,
+      deselectOnClickaway: true,
       showRowHover: true,
       stripedRows: true
     },
     tableRow: {
       // textAlign: 'center'
     }
+  },
+  toggle: {
+    marginBottom:5,
+    marginTop:5,
+    maxWidth: 250,
   }
 };
