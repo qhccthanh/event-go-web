@@ -9,6 +9,7 @@ import {history} from '../storeConfigure';
 
 import Supplier from './DashPageSupplier';
 import Events from './DashPageEvents';
+import Images from './DashPageImages';
 // import Awards from './DashPageAwards';
 // import Tasks from './DashPageTasks';
 import Notifications from './DashPageNotifications';
@@ -58,6 +59,11 @@ const routes = [
     {
         path: '/items',
         sidebar: () => <Items/>,
+        main: () => <h2>Shoelaces</h2>
+    },
+    {
+        path: '/resources',
+        sidebar: () => <Images/>,
         main: () => <h2>Shoelaces</h2>
     },
 ];

@@ -5,7 +5,7 @@ import {getSupplier} from '../../reducer/supplier/action';
 import {signIn} from '../../reducer/authentication/action';
 import {MdEvent, MdLocationOn,MdAccountCircle,
     MdNotificationsActive, MdAcUnit} from 'react-icons/lib/md';
-import {FaSignIn, FaPencil} from 'react-icons/lib/fa';
+import {FaSignIn, FaPencil, FaImage} from 'react-icons/lib/fa';
 import styles from '../stylesScript';
 
 const models = [
@@ -55,6 +55,13 @@ const models = [
             //     },
             //     icon: <FaGift  size={styles.leftIconButton.size}/>
             // },
+            {
+                title: "Hình ảnh",
+                action: function() {
+                    store.dispatch(push('/resources'));
+                },
+                icon: <FaImage  size={styles.leftIconButton.size}/>
+            },
             {
                 title: "Thông báo",
                 action: function() {
