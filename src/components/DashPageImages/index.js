@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getImages} from '../../reducer/images/action';
+import {getImages, setIsCreated} from '../../reducer/images/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -13,6 +13,8 @@ import styles from '../stylesScript';
 import {CardMedia, Paper, Divider, RaisedButton, CardTitle, Card} from 'material-ui';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 import EVTable from '../Utility/GridList';
+import Upload from 'material-ui-upload/Upload';
+import CreateImage from './CreateImage';
 
 import {FaPlusCircle}  from 'react-icons/lib/fa';
 var dateformat = require('dateformat');
@@ -41,14 +43,15 @@ const Dashboard = (states,actions) => ({
         
         if (imagesStore.isCreated === false && imagesStore.image === null) {
             return (
-            <div key="content-events">
+            <div key="content-events"  className="col-xs-12">
                 <div className="header-content">
                 <RaisedButton 
                         label="Tạo mới"
                         primary={true}
                         icon={<FaPlusCircle size={styles.headerIconButton.size}></FaPlusCircle>} 
                         onTouchTap={() => {
-                            {/*store.dispatch(setIsCreated(true))*/}
+                            store.dispatch(setIsCreated(true))
+                            
                         }}
                 />
                 <ButtonRefresh onTouchTap={() => {
@@ -69,10 +72,10 @@ const Dashboard = (states,actions) => ({
             );
         }
 
-        // // Show create view
-        // if (imagesStore.isCreated) {
-        // return <Createimages/>
-        // }
+        // Show create view
+        if (imagesStore.isCreated) {
+            return <CreateImage/>  
+        }
 
         // // Show detail event
         // if (imagesStore.images) {

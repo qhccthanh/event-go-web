@@ -44,7 +44,7 @@ export default  {
     marginTop: 20,
     marginBottom: 20,
     marginRight: 50,
-    display: 'block',
+    display: 'inherit',
     zDepth: 2,
   },
   headerIconButton: {
