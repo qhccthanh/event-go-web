@@ -7,9 +7,7 @@ import '../../styles/styles.css';
 import styles from '../stylesScript';
 
 import {Divider, RaisedButton,
-     Dialog, FlatButton, Table,
-      TableHeader,TableRow, TableBody,
-      TableHeaderColumn, TableRowColumn, IconButton
+     Dialog, FlatButton, IconButton
     } from 'material-ui';
 import {FaPlusCircle, FaTrash} from 'react-icons/lib/fa';
 import {setIsCreated, setAddNewAward,
@@ -21,6 +19,9 @@ import {setSnackBarMessage} from '../../reducer/dashboard/action';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 
 import CreateForm from './DashPageAwards/CreateForm';
+import AwardCard from './DashPageAwards/AwardCard';
+import EVTable from '../Utility/GridList';
+
 var datefomart = require('dateformat');
 
 const CreateAwardAward = ({event_id}) => ({
@@ -30,12 +31,7 @@ const CreateAwardAward = ({event_id}) => ({
         const data = store.getState().awards.data;
         const award = store.getState().awards.award;
         const event = store.getState().events.showEvent;
-
-        const tableStyle = styles.taskListTable.table;
-        const tableHeaderStyle = styles.taskListTable.tableHeader;
-        const tableBodyStyle = styles.taskListTable.tableBody;
-
-        const awardData = store.getState().awards.data;
+        const awardData = data;
         
         if (award !== null) {
 
@@ -102,60 +98,16 @@ const CreateAwardAward = ({event_id}) => ({
                     marginBottom: 10
                 }}/>
                 <div className="event-award-list">
-                    <Table 
-                        fixedHeader={tableStyle.fixedHeader}
-                        fixedFooter={tableStyle.fixedFooter}
-                        selectable={tableStyle.selectable}
-                        multiSelectable={tableStyle.multiSelectable}
-                    >
-                        <TableHeader
-                            displaySelectAll={tableHeaderStyle.showCheckboxes}
-                            adjustForCheckbox={tableHeaderStyle.showCheckboxes}
-                            enableSelectAll={tableHeaderStyle.enableSelectAll}
-                        >
-                            <TableRow>
-                                <TableHeaderColumn colSpan="4" tooltip="Super Header" style={{textAlign: 'center', fontSize: 22}}>
-                                    Danh sách phần thưởng của sự kiện
-                                </TableHeaderColumn>
-                            </TableRow>
-                            <TableRow>
-                                <TableHeaderColumn tooltip="Tên">Tên</TableHeaderColumn>
-                                <TableHeaderColumn  tooltip="Chi tiết">Chi tiết</TableHeaderColumn>
-                                <TableHeaderColumn tooltip="Khởi tạo">Khởi tạo</TableHeaderColumn>
-                                <TableHeaderColumn  tooltip="Trạng trái">Trạng trái</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody
-                            displayRowCheckbox={tableHeaderStyle.showCheckboxes}
-                            deselectOnClickaway={tableBodyStyle.deselectOnClickaway}
-                            showRowHover={tableBodyStyle.showRowHover}
-                            stripedRows={tableBodyStyle.stripedRows}
-                        >
-                            {awardData.map( (award, index) => (
-                                <TableRow
-                                 key={index}
-                                 selected={false}
-                                 onTouchTap={() => {
-                                    store.dispatch(setEditAward(award));
-                                 }}
-                                 >
-                                    <TableRowColumn style={styles.taskListTable.tableRow}>
-                                        {award.name}
-                                    </TableRowColumn>
-                                    <TableRowColumn   style={styles.taskListTable.tableRow}>
-                                        {award.detail}
-                                    </TableRowColumn>
-                                    <TableRowColumn  style={styles.taskListTable.tableRow}>
-                                        {datefomart(award.created_date,'dd/mm/yy')}
-                                    </TableRowColumn>
-                                    <TableRowColumn  style={styles.taskListTable.tableRow}>
-                                        {award.status}
-                                    </TableRowColumn>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-
-                    </Table>
+                    <EVTable {...awardData.map( (award, index) => 
+                         <AwardCard {...award}
+                            detailTouchTap={() => {
+                                store.dispatch(setEditAward(award))
+                            }}
+                            deleteTouchTap={() => {
+                                store.dispatch(deleteAward(award,event._id));
+                            }}
+                         />   
+                    )} isFullWidth={true}/>
                 </div>
             </div>
         );
@@ -207,6 +159,7 @@ function mapFormValuesToAward(values) {
     return {
         name: values.name === undefined ? "" : values.name,
         detail: values.detail === undefined ? "" : values.detail,
+        priority: values.priority === undefined ? 7 : values.priority,
         image_url: values.image_url === undefined ? "" : values.image_url,
         contact: values.contact === undefined ? "" : values.contact,
         award_type: values.award_type === undefined ? "" : values.award_type,

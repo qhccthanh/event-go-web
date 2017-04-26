@@ -6,9 +6,8 @@ import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
-import {Divider, RaisedButton, FlatButton,
-     Dialog, Table, TableHeader,TableRow, TableBody,IconMenu,
-      TableHeaderColumn, TableRowColumn, IconButton, MenuItem
+import {Divider, RaisedButton, FlatButton, IconMenu,
+     Dialog, IconButton, MenuItem
     } from 'material-ui';
 import {FaPlusCircle, FaTrash} from 'react-icons/lib/fa';
 import {setIsCreated, setAddNewTask,setEditTask, createNewTaskFromEventID, 
@@ -33,12 +32,7 @@ const CreateEventTask = ({event_id}) => ({
         const data = store.getState().tasks.data;
         const task = store.getState().tasks.task;
         const event = store.getState().events.showEvent;
-
-        const tableStyle = styles.taskListTable.table;
-        const tableHeaderStyle = styles.taskListTable.tableHeader;
-        const tableBodyStyle = styles.taskListTable.tableBody;
-
-        const taskData = store.getState().tasks.data;
+        const taskData = data;
         
         if (task !== null) {
 
@@ -166,64 +160,3 @@ const mapStateToProps = ({tasks}) => ({
 });
 
 export default connect(mapStateToProps)(CreateEventTask);
-
-
-{/*<Table 
-                        fixedHeader={true}
-                        fixedFooter={tableStyle.fixedFooter}
-                        selectable={tableStyle.selectable}
-                        multiSelectable={tableStyle.multiSelectable}
-                    >
-                        <TableHeader
-                            displaySelectAll={tableHeaderStyle.showCheckboxes}
-                            adjustForCheckbox={tableHeaderStyle.showCheckboxes}
-                            enableSelectAll={tableHeaderStyle.enableSelectAll}
-                        >
-                            <TableRow>
-                                <TableHeaderColumn colSpan="4" tooltip="Super Header" style={{textAlign: 'center', fontSize: 22}}>
-                                    Danh sách nhiệm vụ của sự kiện
-                                    <Divider style={{
-                                        marginTop: 10,
-                                        marginBottom: 10
-                                    }}/>
-                                </TableHeaderColumn>
-                            </TableRow>
-                            <TableRow>
-                                
-                                <TableHeaderColumn tooltip="Tên">Tên</TableHeaderColumn>
-                                <TableHeaderColumn  tooltip="Chi tiết">Chi tiết</TableHeaderColumn>
-                                <TableHeaderColumn tooltip="Khởi tạo">Khởi tạo</TableHeaderColumn>
-                                <TableHeaderColumn  tooltip="Trạng trái">Trạng trái</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody
-                            displayRowCheckbox={tableHeaderStyle.showCheckboxes}
-                            deselectOnClickaway={tableBodyStyle.deselectOnClickaway}
-                            showRowHover={tableBodyStyle.showRowHover}
-                            stripedRows={tableBodyStyle.stripedRows}
-                        >
-                            {taskData.map( (task, index) => (
-                                <TableRow
-                                 key={index}
-                                 selected={false}
-                                 onTouchTap={() => {
-                                    store.dispatch(setEditTask(task));
-                                 }}
-                                 >
-                                    <TableRowColumn style={styles.taskListTable.tableRow}>
-                                        {task.name}
-                                    </TableRowColumn>
-                                    <TableRowColumn   style={styles.taskListTable.tableRow}>
-                                        {task.detail}
-                                    </TableRowColumn>
-                                    <TableRowColumn  style={styles.taskListTable.tableRow}>
-                                        {datefomart(task.created_date,'dd/mm/yy')}
-                                    </TableRowColumn>
-                                    <TableRowColumn  style={styles.taskListTable.tableRow}>
-                                        {task.status}
-                                    </TableRowColumn>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-
-                    </Table>*/}

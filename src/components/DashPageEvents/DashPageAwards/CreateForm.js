@@ -26,15 +26,24 @@ const tags = [
 
 const awardType = [
   <MenuItem key={1} value="item" primaryText="Vật phẩm" />,
-  <MenuItem key={2} value="checkin" primaryText="Checkin" />,
-  <MenuItem key={3} value="question" primaryText="Câu hỏi" />,
+  <MenuItem key={2} value="voucher" primaryText="Vé giảm giá" />,
+  <MenuItem key={3} value="other" primaryText="Ưu đải khác" />,
 ];
 
-const awardDetermine = [
-  <MenuItem key={2} value="input" primaryText="Nhập dữ liệu" />,
-  <MenuItem key={3} value="share" primaryText="Chia sẽ" />,
-];
 
+const priorityType = [
+    <MenuItem key={0} value={0} primaryText="Giải đặc biệt" />,
+  <MenuItem key={1} value={1} primaryText="Giải nhất" />,
+  <MenuItem key={2} value={2} primaryText="Giải nhì" />,
+  <MenuItem key={3} value={3} primaryText="Giải ba" />,
+  <MenuItem key={4} value={4} primaryText="Giải tư" />,
+  <MenuItem key={5} value={5} primaryText="Giải năm" />,
+  <MenuItem key={6} value={6} primaryText="Giải sáu" />,
+  <MenuItem key={7} value={7} primaryText="Giải khuyến khích"/>,
+  <MenuItem key={8} value={8} primaryText="Giải ấn tượng"/>,
+  <MenuItem key={9} value={9} primaryText="Giải sớm nhất"/>,
+  <MenuItem key={10} value={10} primaryText="Giải thưởng"/>,
+]
 
 const CreateAwardForm = (states,actions) => ({
 
@@ -46,6 +55,7 @@ const CreateAwardForm = (states,actions) => ({
             return;
         }
         store.dispatch(change('CreateAwardForm','name',award.name));
+        store.dispatch(change('CreateAwardForm','priority',award.priority));
         store.dispatch(change('CreateAwardForm','detail',award.detail));
         store.dispatch(change('CreateAwardForm','image_url',award.image_url));
         store.dispatch(change('CreateAwardForm','contact',award.contact));
@@ -67,6 +77,16 @@ const CreateAwardForm = (states,actions) => ({
                 label="Tên phần thưởng"
                 name="name"
             />
+            <Field
+                floatingLabelText='Phần thưởng cho giải: '
+                floatingLabelStyle={styles.floatingLabelStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                fullWidth={true}
+                name="priority"
+                component={renderSelectField}
+            >
+              {priorityType}
+            </Field>
             <Field
                 floatingLabelStyle={styles.floatingLabelStyle}
                 floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
@@ -107,7 +127,7 @@ const CreateAwardForm = (states,actions) => ({
                 name="award_type"
                 component={renderSelectField}
             >
-              {awardDetermine}
+              {awardType}
             </Field>
             <Field
                 floatingLabelText='Tags sự kiện (Ex: ""an uong", "nghi ngoi")'
