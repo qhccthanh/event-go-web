@@ -8,8 +8,8 @@ import '../../../styles/App.css';
 import '../../../styles/styles.css';
 import styles from '../../stylesScript';
 
-import {FaInfoCircle, FaTrashO, FaLevelUp, FaLevelDown}  from 'react-icons/lib/fa';
-import {MdDirectionsWalk} from 'react-icons/lib/md';
+import {FaInfoCircle, FaTrashO, FaLevelUp, FaLevelDown, FaCalendarPlusO, FaArrowRight, FaCheckCircle}  from 'react-icons/lib/fa';
+import {MdDirectionsWalk, MdSkipNext, MdSkipPrevious, MdInfo} from 'react-icons/lib/md';
 
 import {Paper, CardHeader,Card, CardText,CardActions, RaisedButton} from 'material-ui';
 var datefomart = require('dateformat');
@@ -30,6 +30,13 @@ const TaskCard = ({detailTouchTap, deleteTouchTap}) => ({
             const taskRe = store.getState().tasks.data.filter((task) => task._id === next_tasks);
             next_tasks = taskRe.length !== 0 ? taskRe[0].name : "Không xác định";
         }
+        const styleIcon = {
+            marginRight: 8,
+            marginBottom: 5,
+            size: 32,
+            color: styles.baseColor
+        }
+
         return (
             <div>
                 <Card>
@@ -40,11 +47,30 @@ const TaskCard = ({detailTouchTap, deleteTouchTap}) => ({
                     className="event-card-header"
                     /> 
                     <CardText>
-                        <div>
-                            Mô tả: {task.description}<br/>
-                            Nhiệm vụ yêu cầu: {require_tasks}<br/>
-                            Nhiệm vụ tiếp theo: {next_tasks}<br/>
-                        </div>
+                        <span>
+                            <MdInfo style={styleIcon}/>
+                            <b>Mô tả: </b> {task.description}<br/>
+                        </span>
+                        <span>
+                            <FaArrowRight style={styleIcon}/>
+                            <b>Loại nhiệm vụ: </b> { (task.task_type === undefined || task.task_type.length === 0) ? "Chưa xác định" : task.task_type}<br/>
+                        </span>
+                        <span>
+                            <FaCheckCircle style={styleIcon}/>
+                            <b>Cách xác nhận:  </b> { (task.task_validate_type === undefined || task.task_validate_type.length === 0) ? "Chưa xác định" : task.task_validate_type}<br/>
+                        </span>
+                        <span>
+                            <FaCalendarPlusO style={styleIcon}/>
+                            <b>Ngày tạo: </b> {datefomart(task.created_date,'dd/mm/yyyy')}<br/>
+                        </span>
+                        <span>
+                            <MdSkipPrevious style={styleIcon}/>
+                            <b>Nhiệm vụ yêu cầu: </b> {require_tasks}<br/>
+                        </span>
+                        <span>
+                            <MdSkipNext style={styleIcon}/>
+                            <b>Nhiệm vụ tiếp theo: </b> {next_tasks}<br/>
+                        </span>
                     </CardText>
                     <CardActions>
                         <RaisedButton 

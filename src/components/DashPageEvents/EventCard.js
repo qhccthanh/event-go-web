@@ -5,7 +5,7 @@ import {Paper, RaisedButton, Divider,Chip, CardHeader, Avatar} from 'material-ui
 import '../../styles/styles.css';
 import '../../styles/App.css';
 
-import {FaCalendarTimesO} from 'react-icons/lib/fa'; 
+import {FaCalendarTimesO, FaCalendarCheckO, FaCalendarPlusO} from 'react-icons/lib/fa'; 
 import styles from '../stylesScript';
 import {store} from '../../storeConfigure';
 import {setShowDetailEvent, deleteEvent} from '../../reducer/events/action';
@@ -43,6 +43,12 @@ function randomIntFromInterval(min,max)
 {
     return Math.floor(Math.random()*(max-min+1)+min);
 }
+var dateformat = require('dateformat');
+const styleIcon = {
+    marginRight: 8,
+    marginBottom: 5,
+    size: 23
+}
 
 const EventCard = () => ({
 
@@ -61,11 +67,19 @@ const EventCard = () => ({
                 <Divider></Divider>
                 
                 <div className="event-card-content">
-                    <div className="div-default-topbottom"> 
-                        Bắt đầu: {event.start_time} <br/>
-                        Kết thúc: {event.end_time} <br/>
-                        Ngày tạo: {event.create_time} <br/>
-                        Giới hạn:{event.limit_user} người<br/>
+                    <div className="div-default-topbottom">
+                        <span>
+                            <FaCalendarPlusO style={styleIcon}/>
+                            Ngày tạo: {dateformat(event.created_time,'dd/mm/yyyy')}<br/>
+                        </span>
+                        <span>
+                            <FaCalendarCheckO style={styleIcon}/>
+                            Bắt đầu: {dateformat(event.start_time,'dd/mm/yyyy')} <br/>
+                        </span>
+                        <span>
+                            <FaCalendarTimesO style={styleIcon}/>
+                            Kết thúc: {dateformat(event.end_time,'dd/mm/yyyy')} <br/>
+                        </span>
                     </div>
                     <Divider></Divider>
                     <div className="div-default-topbottom">
@@ -86,10 +100,14 @@ const EventCard = () => ({
                         store.dispatch(setShowDetailEvent(event)) 
                     }}
                     />
-                    <RaisedButton label="Xoá" secondary={true} 
+                    <RaisedButton 
+                    label="Thống kê" 
+                    secondary={true} 
+                    className="event-card-footer-button"
                     onTouchTap={() => {
-                        store.dispatch(deleteEvent(event)) 
-                    }}/>
+                        {/*store.dispatch(setShowDetailEvent(event)) */}
+                    }}
+                    />
                 </div>
             </Paper>
         )

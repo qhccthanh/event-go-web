@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {setShowDetailEvent, createEvent} from '../../reducer/events/action';
+import {setShowDetailEvent, createEvent, deleteEvent} from '../../reducer/events/action';
 import {}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -38,6 +38,14 @@ const EventInfo = (props) => ({
                             store.dispatch(setShowDetailEvent(null))
                         }}
                     />
+                    
+                    <RaisedButton label="Xoá" secondary={false} 
+                    style={{
+                        'float': 'right',
+                    }} 
+                    onTouchTap={() => {
+                        store.dispatch(deleteEvent(event)) 
+                    }}/>
                 </div>
                 <Tabs
                 inkBarStyle={{

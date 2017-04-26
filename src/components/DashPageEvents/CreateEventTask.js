@@ -12,7 +12,7 @@ import {Divider, RaisedButton, FlatButton,
     } from 'material-ui';
 import {FaPlusCircle, FaTrash} from 'react-icons/lib/fa';
 import {setIsCreated, setAddNewTask,setEditTask, createNewTaskFromEventID, 
-      getTaskFromEventID, setDialogCreateTask, deleteTask} from '../../reducer/tasks/action';
+      getTaskFromEventID, setDialogCreateTask, deleteTask, createTaskWithLocations} from '../../reducer/tasks/action';
 
 import {setSnackBarMessage} from '../../reducer/dashboard/action';
 
@@ -96,11 +96,24 @@ const CreateEventTask = ({event_id}) => ({
                                             primary={true}
                                             keyboardFocused={true}
                                             onTouchTap={() => {
+                                                var locations = store.getState().locations.selectValues;
+                                                
+                                                if (locations === 'none') {
+                                                    return;
+                                                }
 
+                                                if (locations === 'all') {
+                                                    locations = store.getState().locations.data
+                                                } else {
+                                                    locations = locations.map((index) => store.getState().locations.data[index]);
+                                                }
+                                                
+                                                store.dispatch(createTaskWithLocations(locations,event_id));
                                             }}
                                         />,
                                     ]
                                 };
+
                                 store.dispatch(setDialogCreateTask(dialogTask))
                             }}
                          />

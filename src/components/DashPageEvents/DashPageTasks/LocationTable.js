@@ -40,8 +40,8 @@ const LocationTable = () =>  ({
                 selectable={true}
                 multiSelectable={true}
                 onRowSelection={(value) => {
-                    console.log(store.getState().locations.selectValues);
                     store.dispatch(setSelectsLoactionTask(value));
+                    {/*console.log(store.getState().locations.selectValues);*/}
                 }}
                 >
                     <TableHeader

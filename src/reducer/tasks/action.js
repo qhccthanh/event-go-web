@@ -35,30 +35,43 @@ export function getTaskFromEventID(event_id) {
   }
 }
 
+export function createTaskWithLocations(locations,event_id) {
+  return dispatch => {
+    locations.forEach((location, index) => {
+      dispatch(createTaskWithLocation(location,event_id));
+    })
+  }
+}
+
 export function createTaskWithLocation(location,event_id) {
   return dispatch => {
     const newTask = {
       'name': 'Tìm ' + location.name,
-      'sub_name': location.detail,
+      'sub_name': location.address,
       'thumbnail_url': location.image_url,
       'task_type': 'location',
       'task_info': location,
-      'description': 'Đến địa điểm ' + location.name + ' và chụp ảnh, checkin facebook vs hastag #circleK'
+      'description': 'Đến địa điểm ' + location.name + ' tại địa chỉ: ' + location.location_info.formatted_address + 
+                     ' chụp ảnh, checkin facebook vs hastag #circleK',
+      'task_validate_type': 'share_photo'
     }
     axiosev.post('/events/'+event_id+'/tasks', newTask)
       .then(response => {
         dispatch(setAddNewTask(response.data.data));
         dispatch(setSnackBarMessage("Tạo nhiệm vụ "+ location.name +" thành công" , 1000)); 
       })
-      .error(error => {
+      .catch(error => {
         dispatch(setSnackBarMessage("Tạo nhiệm vụ thất bại" , 1000)); 
       });
+
+      dispatch(setDialogCreateTask(null));
   }  
 }
 
 export function createNewTaskFromEventID(event_id) {
   return dispatch => {
-    axiosev.post('/events/'+event_id+'/tasks').then(response => {
+    axiosev.post('/events/'+event_id+'/tasks')
+    .then(response => {
         dispatch(setAddNewTask(response.data.data));
     });
   }
