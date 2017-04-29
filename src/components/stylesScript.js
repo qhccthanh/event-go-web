@@ -56,6 +56,9 @@ export default  {
   taskIconButton: {
     size: 25
   },
+  staffIconButton: {
+    size: 30
+  },
   buttonMargin: {
     marginLeft: 4,
     marginRight: 4

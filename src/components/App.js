@@ -14,6 +14,7 @@ import Images from './DashPageImages';
 // import Tasks from './DashPageTasks';
 import Notifications from './DashPageNotifications';
 import Items from './DashPageItems';
+import Staffs from './DashPageStaff';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Locations from './DashPageLocations';
@@ -46,11 +47,11 @@ const routes = [
         sidebar: () => <Notifications/>,
         main: () => <h2>Shoelaces</h2>
     },
-    // {
-    //     path: '/awards',
-    //     sidebar: () => <Awards/>,
-    //     main: () => <h2>Shoelaces</h2>
-    // },
+    {
+        path: '/staffs',
+        sidebar: () => <Staffs/>,
+        main: () => <h2>Shoelaces</h2>
+    },
     {
         path: '/locations',
         sidebar: () => <Locations/>,

@@ -9,6 +9,7 @@ import notifications from './notifications';
 import tasks from './tasks';
 import dashboard from './dashboard';
 import images from './images';
+import staffs from './staffs';
 
 import { routerReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
@@ -24,6 +25,7 @@ export default combineReducers({
   tasks,
   dashboard,
   images,
+  staffs,
   router: routerReducer,
   form: formReducer
 });

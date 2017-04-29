@@ -4,8 +4,8 @@ import {push} from 'react-router-redux';
 import {getSupplier} from '../../reducer/supplier/action';
 import {signIn} from '../../reducer/authentication/action';
 import {MdEvent, MdLocationOn,MdAccountCircle,
-    MdNotificationsActive, MdAcUnit} from 'react-icons/lib/md';
-import {FaSignIn, FaPencil, FaImage} from 'react-icons/lib/fa';
+    MdNotificationsActive, MdAcUnit, MdPeople} from 'react-icons/lib/md';
+import {FaSignIn, FaPencil, FaImage, FaUsers} from 'react-icons/lib/fa';
 import styles from '../stylesScript';
 
 const models = [
@@ -19,6 +19,13 @@ const models = [
                     store.dispatch(push('/'));
                 },
                 icon: <MdAccountCircle size={styles.leftIconButton.size}/>
+            },
+            {
+                title: "Nhân viên",
+                action: function() {
+                    store.dispatch(push('/staffs'));
+                },
+                icon: <MdPeople size={styles.leftIconButton.size}/>
             },
             {
                 title: "Sự kiện",
