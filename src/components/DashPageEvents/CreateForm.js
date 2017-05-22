@@ -6,9 +6,9 @@ import '../../styles/App.css';
 import '../../styles/styles.css';
 import styles from '../stylesScript';
 
-import { RaisedButton, CardHeader } from 'material-ui';
+import { RaisedButton, CardHeader, MenuItem } from 'material-ui';
 import { Field, reduxForm, change, formValueSelector} from 'redux-form'
-import {renderTextField, renderDatePicker, renderTimePicker} from '../Utility/ReduxField';
+import {renderTextField,renderSelectField, renderDatePicker, renderTimePicker} from '../Utility/ReduxField';
 import {connect} from 'react-redux';
 
 import {FaChevronLeft, FaFloppyO, FaBan, FaPencil, FaTrash}  from 'react-icons/lib/fa';
@@ -18,6 +18,18 @@ const marginDiv = {
                     marginTop: 8,
                     marginBottom: 8
                 }
+
+const clientStatusEvent = [
+  <MenuItem key={1} value="preparing" primaryText="preparing" />,
+  <MenuItem key={2} value="stagging" primaryText="stagging"/>,
+  <MenuItem key={2} value="expired" primaryText="expired"/>,
+];
+
+const statusEvent = [
+  <MenuItem key={1} value="Prepare for Submit" primaryText="preparing" />,
+  <MenuItem key={2} value="Ready for Sale" primaryText="Ready for Sale"/>,
+  <MenuItem key={2} value="Rejected" primaryText="Rejected"/>,
+];
 
 var dateFormat = require('dateformat');
 
@@ -44,6 +56,7 @@ const CreateForm = (props) => ({
                 store.dispatch(change('CreateEventForm','limit_user',event.limit_user));
                 store.dispatch(change('CreateEventForm','tags',event.tags.join()));
                 store.dispatch(change('CreateEventForm','status',event.status));
+                store.dispatch(change('CreateEventForm','client_status',event.client_status));
             }
             
     },
@@ -235,6 +248,28 @@ const CreateForm = (props) => ({
                         component={renderTextField}
                         disabled={!isEdit}
                     />
+                    <Field
+                        floatingLabelText='Trạng thái duyệt sự kiện'
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        name="status"
+                        component={renderSelectField}
+                        disabled={!isEdit}
+                    >
+                        {statusEvent}
+                    </Field>
+                    <Field
+                        floatingLabelText='Trạng thái sự kiện'
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        name="client_status"
+                        component={renderSelectField}
+                        disabled={!isEdit}
+                    >
+                        {clientStatusEvent}
+                    </Field>
                 </div>
 
                 {this.getBottomView()}
@@ -291,7 +326,9 @@ function mapFormValuesToEvent(values) {
         tags: values.tags === undefined ? [] : values.tags.split(",").map(value => {
             return value.trim()
         }),
-        limit_user: values.limit_user === undefined ? 0 : values.limit_user
+        limit_user: values.limit_user === undefined ? 0 : values.limit_user,
+        'client_status': values.client_status === undefined ? 'preparing' : values.client_status,
+        'status': values.status === undefined ? 'Prepare for Submit' : values.client_status,
     }
 }
 

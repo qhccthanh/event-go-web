@@ -1,17 +1,32 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {connect}  from 'react-redux';
+import { Field, reduxForm, formValueSelector, change } from 'redux-form'
+import {renderTextField, renderSelectField} from '../Utility/ReduxField';
+import {connect} from 'react-redux';
+
 import '../../styles/App.css';
 import '../../styles/styles.css';
 import {TextField, RaisedButton} from 'material-ui';
+
 // import {orange500, blue500} from 'material-ui/styles/colors';
-import {setIsEditSupplier} from '../../reducer/supplier/action';
 import {FaChevronLeft, FaFloppyO}  from 'react-icons/lib/fa';
 import styles from '../stylesScript';
 
+import {updateInfo, setIsEditSupplier} from '../../reducer/supplier/action';
+
 const EditPage = (supplier) => ({
-    render() {
+    componentWillMount() {
         const supplier = store.getState().supplier.supplier;
+        const isEditInfo = store.getState().supplier.isEditInfo;
+
+        if (isEditInfo){
+            console.log(supplier);
+            store.dispatch(change('EditSupplierValueForm','name',supplier.name));
+            store.dispatch(change('EditSupplierValueForm','username',supplier.username));
+        }
+    },
+    render() {
+       
         return (
             <div>
                 <div className="top-button">
@@ -29,47 +44,39 @@ const EditPage = (supplier) => ({
                     primary={true}
                     icon={<FaFloppyO size={styles.headerIconButton.size}></FaFloppyO>} 
                     onTouchTap={() => {
-                        store.dispatch(setIsEditSupplier())
+                        let form = store.getState().form.EditSupplierValueForm
+                        if (form === null || form === undefined) {
+                            store.dispatch(setIsEditSupplier())
+                            return;
+                        }
+                        let values = form.values;
+                        let name = values.name === undefined ? "" : values.name;
+                        store.dispatch(updateInfo({
+                            'name': name
+                        }))
                     }}
                     style={styles.topButton}
                     />
                 </div>
                 <div className="content-field">
                     <br/>
-                    <TextField
-                    floatingLabelText="Username"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    style={styles.editSupplierTextField}
-                    value={supplier.username}
-                    disabled={true}
+                    <Field
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        component={renderTextField}
+                        label="Tên tài khoản"
+                        name="username"
+                        disabled={true}
                     />
                     <br/>
-                     <TextField
-                    floatingLabelText="Supplier Name"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    style={styles.editSupplierTextField}
-                    value={supplier.name}
-                    />
-                    <br/>
-                    <TextField
-                    floatingLabelText="Fanpage Facebook"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    style={styles.editSupplierTextField}
-                    value={supplier.facebook_url}
-                    />
-                    <br/>
-                    <TextField
-                    floatingLabelText="Description"
-                    floatingLabelStyle={styles.floatingLabelStyle}
-                    floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    style={styles.editSupplierTextField}
-                    multiLine={true}
-                    rows={3}
-                    rowsMax={10}
-                    value={supplier.description}
+                    <Field
+                        floatingLabelStyle={styles.floatingLabelStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                        fullWidth={true}
+                        component={renderTextField}
+                        label="Tên nhà cung cấp"
+                        name="name"
                     />
                     <div ></div>
                 </div>
@@ -78,9 +85,17 @@ const EditPage = (supplier) => ({
     }
 });
 
-const mapStateToProps = ({supplier}) => ({
-    supplier
-});
+var EditSupplierValueForm = reduxForm({
+  form: 'EditSupplierValueForm',  // a unique identifier for this form
+})(EditPage);
 
+const selector = formValueSelector('EditSupplierValueForm') // <-- same as form name
+EditSupplierValueForm = connect(
+  supplier => {
+    return {
+      supplier
+    }
+  }
+)(EditSupplierValueForm)
 
-export default connect(mapStateToProps)(EditPage);
+export default EditSupplierValueForm

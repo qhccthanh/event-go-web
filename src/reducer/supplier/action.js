@@ -1,5 +1,6 @@
 import axiosev from '../../axiosev';
 import {store} from '../../storeConfigure';
+import {setSnackBarMessage} from '../dashboard/action';
 
 export const SET_SUPPLIER = 'SET_SUPPLIER';
 export const GET_SUPPLIER = 'GET_SUPPLIER';
@@ -30,8 +31,11 @@ export function updateInfo(info) {
   return dispatch => {
     axiosev.put('/suppliers', info).then(response => {
       console.log(response);
+      setIsEditSupplier();
+      dispatch(setSnackBarMessage("Cập nhật thông tin thành công" , 3000));
     }).catch(error => {
       console.log(error);
+      dispatch(setSnackBarMessage("Cập nhật thông tin thất bại" , 3000));
     });
   }
 }

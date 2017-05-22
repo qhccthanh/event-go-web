@@ -11,7 +11,12 @@ import {Paper} from 'material-ui';
 import styles from '../stylesScript';
 
 const Dashboard = (states,actions) => ({
-    
+
+    componentWillMount() {
+        store.dispatch(getSupplier());
+    },
+
+
   render() {
     const contentPage = store.getState().supplier.isEditInfo ? <EditPage></EditPage> : <InfoPage></InfoPage>;
     return (
