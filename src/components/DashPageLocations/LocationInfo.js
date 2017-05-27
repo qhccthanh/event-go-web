@@ -69,58 +69,58 @@ const LocationItem = (props) => ({
             <div>
                 <div className="create-event-header" style={Object.assign(marginDiv,styles.floatingLabelStyle)}>
                     <div className="header-content">
-                    <RaisedButton 
-                        label="Trở về"
-                        secondary={true}
-                        icon={<FaChevronLeft size={styles.headerIconButton.size}></FaChevronLeft>} 
-                        onTouchTap={() => {
-                            store.dispatch(setHiddenLocation())
-                            store.dispatch(setIsEdit(false))
-                        }}
-                    />
-                    <RaisedButton 
-                        label={isEdit ? "Huỷ bỏ" : "Chỉnh sửa"}
-                        primary={!isEdit}
-                        icon={isEdit ?  <FaBan size={styles.headerIconButton.size}/> : <FaPencil size={styles.headerIconButton.size}/>} 
-                        onTouchTap={() => {
-                            console.log(isEdit);
-                            store.dispatch(setIsEdit(!isEdit))
-                        }}
-                         style={{
-                            'float': 'right',
-                        }}
-                    />
-                    {
-                        isEdit == true ? <RaisedButton 
-                            label="Lưu lại"
-                            primary={true}
-                            icon={<FaFloppyO size={styles.headerIconButton.size}/>} 
+                        <RaisedButton 
+                            label="Trở về"
+                            secondary={true}
+                            icon={<FaChevronLeft size={styles.headerIconButton.size}></FaChevronLeft>} 
                             onTouchTap={() => {
-                                var locationUpdate = store.getState().form.InfoLocationForm.values;
-                                console.log(locationUpdate);
-                                locationUpdate = mapFormValuesToItem(locationUpdate);
-                                locationUpdate.location_id = location._id;
-                                
-                                store.dispatch(updateLocation(locationUpdate))
-                            }}
-                            disabled={isEnableSaveButton}
-                            style={{
-                                'float': 'right',
-                                marginRight: 8
-                            }}
-                        /> : <RaisedButton 
-                            label="Xoá"
-                            secondary={false}
-                            icon={<FaTrash size={styles.headerIconButton.size}/>} 
-                            onTouchTap={() => {
-                                store.dispatch(deleteLocation(location))
-                            }}
-                            style={{
-                                'float': 'right',
-                                marginRight: 8
+                                store.dispatch(setHiddenLocation())
+                                store.dispatch(setIsEdit(false))
                             }}
                         />
-                    }
+                        <RaisedButton 
+                            label={isEdit ? "Huỷ bỏ" : "Chỉnh sửa"}
+                            primary={!isEdit}
+                            icon={isEdit ?  <FaBan size={styles.headerIconButton.size}/> : <FaPencil size={styles.headerIconButton.size}/>} 
+                            onTouchTap={() => {
+                                console.log(isEdit);
+                                store.dispatch(setIsEdit(!isEdit))
+                            }}
+                            style={{
+                                'float': 'right',
+                            }}
+                        />
+                        {
+                            isEdit == true ? <RaisedButton 
+                                label="Lưu lại"
+                                primary={true}
+                                icon={<FaFloppyO size={styles.headerIconButton.size}/>} 
+                                onTouchTap={() => {
+                                    var locationUpdate = store.getState().form.InfoLocationForm.values;
+                                    console.log(locationUpdate);
+                                    locationUpdate = mapFormValuesToItem(locationUpdate);
+                                    locationUpdate.location_id = location._id;
+                                    
+                                    store.dispatch(updateLocation(locationUpdate))
+                                }}
+                                disabled={isEnableSaveButton}
+                                style={{
+                                    'float': 'right',
+                                    marginRight: 8
+                                }}
+                            /> : <RaisedButton 
+                                label="Xoá"
+                                secondary={false}
+                                icon={<FaTrash size={styles.headerIconButton.size}/>} 
+                                onTouchTap={() => {
+                                    store.dispatch(deleteLocation(location))
+                                }}
+                                style={{
+                                    'float': 'right',
+                                    marginRight: 8
+                                }}
+                            />
+                        }
                     </div>
                 </div>
                 <div className="create-event-content" style={marginDiv}>

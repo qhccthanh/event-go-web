@@ -1,6 +1,6 @@
 import React from 'react';
 import {store} from '../../storeConfigure';
-import {getNotifications, setIsCreated} from '../../reducer/notifications/action';
+import {getNotifications, setIsCreated, deleteNotification, pushNotification} from '../../reducer/notifications/action';
 import {connect}  from 'react-redux';
 import '../../styles/App.css';
 import '../../styles/styles.css';
@@ -9,7 +9,7 @@ import styles from '../stylesScript';
 import CreateNotification from './CreateNotification';
 import NotificationCard from './NotificationCard';
 
-import {Paper, RaisedButton, Divider} from 'material-ui';
+import {Paper, RaisedButton, Divider, Avatar} from 'material-ui';
 import ButtonRefresh from '../Utility/ButtonRefresh';
 import EVTable from '../Utility/GridList';
 
@@ -21,7 +21,24 @@ const Dashboard = (states,actions) => ({
   getContentPage() {
 
         let notificationsStore = store.getState().notifications;
-        if (notificationsStore.isCreated === false && notificationsStore.location === null) {
+        const notificaitons = notificationsStore.data;
+        const notificationCards =  notificaitons.map(item => {
+            console.log(item);
+                                return (
+                                <NotificationCard 
+                                    itemTitle={item.title} 
+                                    itemSubtitle={item.body}
+                                    itemAvatar={<FaBellO size={25}></FaBellO>}
+                                    pushAction={() => {
+                                        store.dispatch(pushNotification(item));
+                                    }}
+                                    deleteAction={() => {
+                                        store.dispatch(deleteNotification(item));
+                                    }}
+                                    />);
+                            });
+
+        if (notificationsStore.isCreated === false && notificationsStore.notification === null) {
             return (
             <div key="content-events">
                 <div className="header-content">
@@ -37,11 +54,8 @@ const Dashboard = (states,actions) => ({
                 </div>
                 <div className="content-events"> 
                 <div>
-                    <EVTable>
-                        <NotificationCard 
-                            itemTitle="Thống bao cho Event 20 năm" 
-                            itemSubtitle="Thông báo thêm phần thưởng cho sự kiện"
-                            itemAvatar={<FaBellO size={40}></FaBellO>}></NotificationCard>
+                    <EVTable {...notificationCards}>
+                        
                     </EVTable>
                     <br/>
                     <Divider/>
@@ -70,7 +84,11 @@ const Dashboard = (states,actions) => ({
                 {htmlContent}
             </Paper>
         )
-    }
+    },
+    componentWillMount() {
+        console.log("call componentWillMount");
+         store.dispatch(getNotifications());
+    },
 });
 
 const mapStateToProps = ({notifications}) => ({

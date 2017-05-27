@@ -7,12 +7,13 @@ import {} from '../../reducer/notifications/action';
 
 import '../../styles/App.css';
 import '../../styles/styles.css';
-// import styles from '../stylesScript';
+import styles from '../stylesScript';
 
-import {Paper, CardHeader} from 'material-ui';
+import {Paper, CardHeader, RaisedButton} from 'material-ui';
 // import ButtonRefresh from '../Utility/ButtonRefresh';
+import {FaBellO, FaTrash}  from 'react-icons/lib/fa';
 
-const NotificationCard = ({itemTitle, itemSubtitle, itemAvatar, onTouchTap}) => ({
+const NotificationCard = ({itemTitle, itemSubtitle, itemAvatar, pushAction, deleteAction}) => ({
     
     render() {
         return (
@@ -23,8 +24,29 @@ const NotificationCard = ({itemTitle, itemSubtitle, itemAvatar, onTouchTap}) => 
                     subtitle={itemSubtitle}
                     avatar={itemAvatar}
                     className="event-card-header"
-                    onTouchTap={onTouchTap}
                     /> 
+                    <RaisedButton 
+                        label="Push"
+                        primary={true}
+                        onTouchTap={pushAction}
+                        icon={<FaBellO size={styles.headerIconButton.size}></FaBellO>} 
+                        style={{
+                            marginTop: 8,
+                            marginBottom: 8,
+                            marginLeft: 8,
+                        }}
+                    />
+                    <RaisedButton 
+                        label="Xoá"
+                        secondary={true}
+                        onTouchTap={deleteAction}
+                        style={{
+                            marginTop: 8,
+                            marginBottom: 8,
+                            marginLeft: 8,
+                        }}
+                        icon={<FaTrash size={styles.headerIconButton.size}></FaTrash>} 
+                    />
                 </Paper>
             </div>
         )

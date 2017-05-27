@@ -1,7 +1,9 @@
 import {
     SET_NOTIFICATIONS,
     SET_IS_CREATE_NOTIFICATION,
-    SET_SHOW_DETAIL_NOTIFICATION
+    SET_SHOW_DETAIL_NOTIFICATION,
+    ADD_DATA_NOTIFICATION,
+    DELETE_DATA_NOTIFICATION
   } from './action';
 
 const initialState = {
@@ -26,6 +28,19 @@ export default (state = initialState, action) => {
         ...state,
         notification: action.notification
       }
+    case ADD_DATA_NOTIFICATION: 
+        state.data.push(action.data);
+        return {
+          ...state,
+          data: state.data
+      }
+    case DELETE_DATA_NOTIFICATION: 
+      return {
+          ...state,
+          data: state.data.filter((notification) => {
+            return notification._id !== action.notification._id;
+          })
+        }
     default:
       return state;
   }
