@@ -87,6 +87,7 @@ export function createEvent(eventInfo) {
 export function deleteEvent(event) {
   return dispatch => {
     var eventID = event.event_id;
+    console.log(event);
     if (eventID === null || eventID === undefined) {
       eventID = event._id;
     }
