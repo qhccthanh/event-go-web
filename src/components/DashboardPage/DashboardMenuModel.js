@@ -82,9 +82,16 @@ const models = [
         title: "Debug",
         subModels: [
             {
-                title: "Đăng nhập",
+                title: "Đăng nhập Circle K",
                 action: function() {
                     store.dispatch(signIn('supplier_1', 'supplier_1'));
+                },
+                icon: <FaSignIn  size={styles.leftIconButton.size}/>
+            },
+            {
+                title: "Đăng nhập B'smart",
+                action: function() {
+                    store.dispatch(signIn('bsmart', '123456'));
                 },
                 icon: <FaSignIn  size={styles.leftIconButton.size}/>
             },

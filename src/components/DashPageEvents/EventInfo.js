@@ -44,7 +44,7 @@ const EventInfo = (props) => ({
                         'float': 'right',
                     }} 
                     onTouchTap={() => {
-                        store.dispatch(deleteEvent(event)) 
+                        store.dispatch(deleteEvent(eventStore.showEvent)) 
                     }}/>
                 </div>
                 <Tabs
